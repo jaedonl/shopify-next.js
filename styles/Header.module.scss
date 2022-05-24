@@ -1,0 +1,47 @@
+.header {
+    padding: 20px;
+
+    .header_nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        a {
+            font-size: 18px;
+        }
+
+        .home_link {
+            flex: 1;
+            
+            a {
+                font-size: 40px;
+            }
+        }
+
+        .collection_nav {
+            flex: 1;
+
+            .collection_ul {
+                display: flex;
+                align-items: center;      
+                justify-content: center;          
+                gap: 20px;
+
+                .nested_nav {
+                    display: none;                    
+                }
+            }
+        }
+
+        .right_nav {
+            flex: 1;
+
+            .right_ul {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                gap: 20px;
+            }
+        }
+    }
+}
