@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css'
 import MainBanner from '../components/MainBanner'
 import ProductList from '../components/ProductList'
 import CollectionList from '../components/CollectionList'
+import axios from 'axios'
 
 export default function Home({}) {
     return (
@@ -27,11 +28,13 @@ export default function Home({}) {
 }
 
 export const getServerSideProps = async (context) => {
-
-    // const res = await axios.get("http://localhost:3000/api/products")
+    //https://codesandbox.io/s/exapp-eppyvq?file=/server/server.js
+    
+    // const res = await axios.get("https://jdonlee.myshopify.com/admin/api/2022-04/products.json")
 
     return {
         props: {
+            // products: res.data
         },
     }
 }
