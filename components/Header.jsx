@@ -6,9 +6,9 @@ const Header = () => {
     return (
         <header className={styles.header}>
             <nav className={styles.header_nav}>
-                <div className={styles.home_link}>
+                <h1 className={styles.home_link}>
                     <Link href="/" passHref>JdonL</Link>
-                </div>                
+                </h1>                
 
                 <nav className={styles.collection_nav}>
                     <ul className={styles.collection_ul}>

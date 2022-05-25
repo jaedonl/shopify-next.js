@@ -1,12 +1,12 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import MainBanner from '../components/MainBanner'
 import ProductList from '../components/ProductList'
 import CollectionList from '../components/CollectionList'
 import axios from 'axios'
 
-export default function Home({}) {
+export default function Home({collections}) {
+    console.log(collections)
     return (
         <main className={styles.container}>
             <Head>
@@ -20,7 +20,11 @@ export default function Home({}) {
             </section>
 
             <section>
-                <CollectionList/>
+                <CollectionList collections={collections} />
+            </section>
+
+            <section style={{height: "30vh"}}>
+                
             </section>
         
         </main>
@@ -28,13 +32,31 @@ export default function Home({}) {
 }
 
 export const getServerSideProps = async (context) => {
-    //https://codesandbox.io/s/exapp-eppyvq?file=/server/server.js
+    const domain = process.env.SHOPIFY_STORE_DOMAIN
+    const adminAccessToken = process.env.SHOPIFY_ADMIN_ACCESSTOKEN
     
-    // const res = await axios.get("https://jdonlee.myshopify.com/admin/api/2022-04/products.json")
+    const smartCollection = `https://${domain}/admin/api/2022-04/smart_collections.json`
+    const customCollection = `https://${domain}/admin/api/2022-04/collections/270853537837.json`
+
+    const headers = {
+        "X-Shopify-Access-Token": adminAccessToken,
+        "Content-Type": "application/json",
+    }
+
+    const smartRes = await axios.get(smartCollection, { headers })
+    const bestsellerRes = await axios.get(customCollection, { headers })    
+
+    const smartcollections = smartRes.data.smart_collections.filter(item => item.title !== 'All Products')
+    const bestsellerCollections = [bestsellerRes.data.collection]
+
+    const allCollections = bestsellerCollections.concat(smartcollections)
+    
+    
+
 
     return {
         props: {
-            // products: res.data
+            collections: allCollections,            
         },
     }
 }
