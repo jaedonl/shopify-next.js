@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   env: {
     SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN,
     SHOPIFY_ADMIN_ACCESSTOKEN: process.env.SHOPIFY_ADMIN_ACCESSTOKEN,
@@ -8,7 +7,7 @@ const nextConfig = {
   },
   images: {
     domains: ["cdn.shopify.com"],
-  },
+  }, 
 }
 
 module.exports = nextConfig

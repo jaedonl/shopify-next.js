@@ -11,13 +11,15 @@
             position: absolute;
             display: flex;
             align-items: center;
-            bottom: 0;
+            bottom: -5px;
             right: 0;
             font-size: 20px;
             cursor: pointer;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
 
             &:hover {
-                text-decoration: underline;
+                border-bottom: 2px solid #000;
             }
             span {
                 margin-right: 5px;
@@ -28,7 +30,7 @@
     .collection_lists {
         display: flex;
         flex-wrap: wrap;
-        row-gap: 50px;
+        row-gap: 55px;
         column-gap: 20px;
         display: grid;            
         grid-template-columns: 1fr 1fr 1fr 1fr;                
@@ -38,17 +40,22 @@
             background: transparent;       
             border: 1px solid #ddd;         
                         
-            &:hover { 
-                text-decoration: underline;      
+            &:hover {                  
                 background: #000;      
-                font-weight: 500;                   
-                span {                    
-                    .image {
-                        transition: all .3s ease;
-                        transform: scale(102%);
-                        opacity: .9;                         
+                font-weight: 500;      
+
+                .image {
+                    transition: all .3s ease;
+                    transform: scale(102%);
+                    opacity: .8;                         
+                }       
+                
+                figure {
+                    div {
+                        border-bottom: 2px solid #000;
                     }
-                }                        
+                }
+                
             }
 
             &:first-child {
@@ -72,17 +79,22 @@
                 margin-bottom: 10px;                                           
                 
                 figcaption {
-                    display: flex;
-                    align-items: flex-end;
-                    padding-top: 7px;
+                    display: inline-block;
+                    // padding: 7px;
                     position: relative;
-                    font-size: 22px;                                           
+                    font-size: 22px;   
+                    
+                    div {
+                        display: flex;
+                        align-items: center;
+                        padding: 5px 0;
+                        border-bottom: 2px solid transparent;
 
-                    span {
-                        width: auto !important;
-                        margin-right: 5px;
-                    }                    
-                                     
+                        span {
+                            width: auto !important;
+                            margin-right: 5px;
+                        }      
+                    }                                             
                 }
             }
         }       

@@ -1,0 +1,37 @@
+.container {
+    padding: 2rem;
+
+    .collection_header {
+        .breadcrumb {
+            ul {
+                display: flex;
+    
+                li {
+                    font-size: 14px;
+                    color: #0f0f0f;
+    
+                    &:last-child {
+                        font-weight: 600;
+                    }
+                    a {
+                        &:hover {
+                            cursor: pointer;
+                            text-decoration: underline;
+                        }
+                    }
+                    span {
+                        padding: 0 5px;
+                    }
+                }
+                
+            }
+        }
+    
+        .page_title {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }            
+    }
+
+    
+}

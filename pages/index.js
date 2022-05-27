@@ -6,7 +6,6 @@ import CollectionList from '../components/CollectionList'
 import axios from 'axios'
 
 export default function Home({collections}) {
-    console.log(collections)
     return (
         <main className={styles.container}>
             <Head>
@@ -14,7 +13,9 @@ export default function Home({collections}) {
                 <meta name="description" content="Shopify with Next.js" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
+            
+            <h1 className={styles.page_heading} title="Homepage">JdonL Homepage</h1>
+            
             <section>
                 <MainBanner/>
             </section>
@@ -46,7 +47,7 @@ export const getServerSideProps = async (context) => {
     const smartRes = await axios.get(smartCollection, { headers })
     const bestsellerRes = await axios.get(customCollection, { headers })    
 
-    const smartcollections = smartRes.data.smart_collections.filter(item => item.title !== 'All Products')
+    const smartcollections = smartRes.data.smart_collections.filter(item => item.title !== 'All')
     const bestsellerCollections = [bestsellerRes.data.collection]
 
     const allCollections = bestsellerCollections.concat(smartcollections)
