@@ -1,5 +1,8 @@
 .container {
     padding: 2rem;
+    max-width: 120rem;
+    margin: 0 auto;
+
 
     .collection_header {
         .breadcrumb {
@@ -13,10 +16,9 @@
                     &:last-child {
                         font-weight: 600;
                     }
-                    a {
+                    a {                        
                         &:hover {
-                            cursor: pointer;
-                            text-decoration: underline;
+                            text-decoration: underline;              
                         }
                     }
                     span {
@@ -26,16 +28,123 @@
                 
             }
         }
-    
-        .page_title {
-            font-size: 2.5rem;
-            font-weight: 600;
-        }            
+        
+        .collection_header_flex {
+            display: flex;
+            gap: 25px;
+            margin: 2rem 0;
+
+            .collection_info {
+                flex: 1;
+
+                .page_title {
+                    font-size: 2.5rem;
+                    font-weight: 600;
+                    margin: 0;
+                }      
+                .page_description {
+                    font-size: 1rem;
+                    line-height: 1.5;
+                }
+            }
+
+            .collection_banner {
+                flex: 1;
+                span {
+                    position: relative !important;
+                    max-height: 250px;
+                    
+                    img {
+                        position: relative !important;
+                        width: 100% !important;
+                        height: 100% !important;
+                        max-height: 250px !important;
+                    }
+                }
+            }
+        }
+
     }
 
     .collection_main {
-        .productList {
-            
+        padding-top: 5rem;
+
+        .product_list {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            justify-content: space-between;
+            gap: 2rem;
+
+            .product_item {
+                flex: 25%;
+                cursor: pointer;       
+                
+                &:hover {                                           ;
+                    .product_title {
+                        border-bottom: 3px solid #000;
+                    }
+                     
+                    .image {                            
+                        transition: all .3s ease;
+                        transform: scale(102%);
+                        opacity: .8;                               
+                    }
+                }
+                span {
+                    position: relative !important;
+
+                    .image {
+                        position: relative !important;
+                        width: 100% !important;
+                        height: 100% !important;
+                    }
+                }
+
+                .product_title {
+                    margin: 1rem 0 .5rem;
+                    font-weight: 500;
+                    font-size: 1.5rem;
+                    display: inline-block;
+                    border-bottom: 3px solid transparent;
+                }
+
+                .product_type_tags {
+                    margin: 0 0 0.5rem;
+                    span {
+                        text-transform: capitalize;
+
+                        &.tags {
+                            &:last-child {
+                                .comma {
+                                    display: none;
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+                .product_price {
+                    display: flex;
+                    gap: 2px;
+                                            
+                    .dollar {
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+                    .integer {
+                        font-size: 1.5rem;
+                        font-weight: 600;
+                    }
+                    .decimals {
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+                    .currency {
+                        font-size: 1rem;
+                        font-weight: 500;
+                    }
+                }
+            }
         }
     }
 }

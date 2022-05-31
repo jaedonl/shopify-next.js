@@ -37,11 +37,9 @@
 
         .collection_listItem {                        
             width: 100%;      
-            background: transparent;       
             border: 1px solid #ddd;         
                         
             &:hover {                  
-                background: #000;      
                 font-weight: 500;      
 
                 .image {

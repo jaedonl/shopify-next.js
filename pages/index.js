@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
 import MainBanner from '../components/MainBanner'
-import ProductList from '../components/ProductList'
 import CollectionList from '../components/CollectionList'
 import axios from 'axios'
 
@@ -24,10 +23,7 @@ export default function Home({collections}) {
                 <CollectionList collections={collections} />
             </section>
 
-            <section style={{height: "30vh"}}>
-                
-            </section>
-        
+            <section style={{height: "30vh"}}></section>        
         </main>
     )
 }
@@ -51,8 +47,6 @@ export const getServerSideProps = async (context) => {
     const bestsellerCollections = [bestsellerRes.data.collection]
 
     const allCollections = bestsellerCollections.concat(smartcollections)
-    
-
 
     return {
         props: {
