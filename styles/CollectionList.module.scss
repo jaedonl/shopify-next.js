@@ -77,10 +77,15 @@
                 margin-bottom: 10px;                                           
                 
                 figcaption {
-                    display: inline-block;
-                    // padding: 7px;
+                    display: inline-block;                    
                     position: relative;
-                    font-size: 22px;   
+                    h2 {
+                        margin: 0;
+                        font-weight: 500;
+                        font-size: 1.5rem;  
+                        margin-right: 5px;
+                    }
+                    
                     
                     div {
                         display: flex;

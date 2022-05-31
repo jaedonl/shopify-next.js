@@ -67,16 +67,24 @@
     }
 
     .collection_main {
-        padding-top: 5rem;
+        padding-top: 3rem;
+
+        .sorting_filter {            
+            margin-bottom: 1rem;
+
+            select {
+                padding: 10px;
+            }
+        }
 
         .product_list {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             justify-content: space-between;
-            gap: 2rem;
+            column-gap: 2rem;
+            row-gap: 4rem;
 
-            .product_item {
-                flex: 25%;
+            .product_item {                
                 cursor: pointer;       
                 
                 &:hover {                                           ;
@@ -141,7 +149,7 @@
                     }
                     .currency {
                         font-size: 1rem;
-                        font-weight: 500;
+                        font-weight: 400;
                     }
                 }
             }
