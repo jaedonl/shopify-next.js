@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 const CollectionList = ({collections}) => {
+    const [allCollections, setAllCollections] = useState(collections)
+    
     return (
         <div className={styles.container}>
             <div className={styles.collections}>
@@ -17,12 +19,12 @@ const CollectionList = ({collections}) => {
             </div>            
 
             <div className={styles.collection_lists}>
-                {collections.map((collection, idx) => (
+                {allCollections.map((collection, idx) => (
                     <div className={styles.collection_listItem} key={idx}>
                         <figure>
                             <Link href={`/collections/${collection.handle}`} passHref>
                                 <a>
-                                    <Image src={collection.image.src} alt="" layout="fill" objectFit="cover" className={styles.image} />        
+                                    <Image src={collection.image.url} alt="" layout="fill" objectFit="cover" className={styles.image} />        
                                     <figcaption>
                                         <div>
                                             <h2>{collection.title}</h2>

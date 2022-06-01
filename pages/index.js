@@ -1,12 +1,15 @@
+import { useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
 import MainBanner from '../components/MainBanner'
 import CollectionList from '../components/CollectionList'
-import axios from 'axios'
+import { fetchAllCollection } from '../lib/shopify'
 
 export default function Home({collections}) {
+    const [allCollections, setAllCollections] = useState(collections)    
+    
     return (
-        <main className={styles.container}>
+        <main className={styles.template}>
             <Head>
                 <title>Shopify with Next.js</title>
                 <meta name="description" content="Shopify with Next.js" />
@@ -20,7 +23,7 @@ export default function Home({collections}) {
             </section>
 
             <section>
-                <CollectionList collections={collections} />
+                <CollectionList collections={allCollections} />
             </section>
 
             <section style={{height: "30vh"}}></section>        
@@ -29,28 +32,30 @@ export default function Home({collections}) {
 }
 
 export const getServerSideProps = async (context) => {
-    const domain = process.env.SHOPIFY_STORE_DOMAIN
-    const adminAccessToken = process.env.SHOPIFY_ADMIN_ACCESSTOKEN
+    // const smartCollection = `https://${process.env.SHOPIFY_STORE_DOMAIN}/admin/api/2022-04/smart_collections.json`
+    // const customCollection = `https://${process.env.SHOPIFY_STORE_DOMAIN}/admin/api/2022-04/collections/270853537837.json`
+    // const headers = {"X-Shopify-Access-Token": process.env.SHOPIFY_ADMIN_ACCESSTOKEN,"Content-Type": "application/json"}
+    // const smartRes = await axios.get(smartCollection, { headers })
+    // const bestsellerRes = await axios.get(customCollection, { headers })    
+    // const smartcollections = smartRes.data.smart_collections.filter(item => item.title !== 'All')
+    // const bestsellerCollections = [bestsellerRes.data.collection]
+    // const allCollections = bestsellerCollections.concat(smartcollections)
+
+    const res = await fetchAllCollection()
+    const data = res.body.data.collections.nodes
     
-    const smartCollection = `https://${domain}/admin/api/2022-04/smart_collections.json`
-    const customCollection = `https://${domain}/admin/api/2022-04/collections/270853537837.json`
+    const allCollection = data.filter(item => item.title !== 'All')    
+    const index = allCollection.findIndex(el => el.title == 'Bestseller')
+    const node = allCollection[index]
+    
+    allCollection.splice(index, 1)
+    allCollection.unshift(node)
 
-    const headers = {
-        "X-Shopify-Access-Token": adminAccessToken,
-        "Content-Type": "application/json",
-    }
-
-    const smartRes = await axios.get(smartCollection, { headers })
-    const bestsellerRes = await axios.get(customCollection, { headers })    
-
-    const smartcollections = smartRes.data.smart_collections.filter(item => item.title !== 'All')
-    const bestsellerCollections = [bestsellerRes.data.collection]
-
-    const allCollections = bestsellerCollections.concat(smartcollections)
+    console.log(allCollection)
 
     return {
         props: {
-            collections: allCollections,            
+            collections: allCollection,
         },
     }
 }

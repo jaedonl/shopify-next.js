@@ -7,41 +7,40 @@ import { fetchCollectionInfo } from '../../lib/shopify'
 import styles from '../../styles/Collection.module.scss'
 
 const Collection = ({ collectionInfo }) => {
+    const [collection, setCollection] = useState(collectionInfo)
     const [products, setProducts] = useState([collectionInfo.products.edges])
-    const router = useRouter()         
+    const router = useRouter()             
 
     useEffect(() => {
         setProducts([collectionInfo.products.edges])
     }, [router])              
     
     return (
-        <main className={styles.container}>
+        <main className={styles.template}>
             <Head>
-                <title>JdonL | {collectionInfo.title}</title>
-                <meta name="description" content={collectionInfo.description} />
+                <title>JdonL | {collection.title}</title>
+                <meta name="description" content={collection.description} />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             
-            <section id="collection-info" className={styles.collection_header}>
-                <nav className={styles.breadcrumb}>
-                    <ul>
-                        <li><Link href="/"><a>home</a></Link><span>/</span></li>
-                        <li><Link href="/collections"><a>collections</a></Link><span>/</span></li>
-                        <li>{router.query.id}</li>
-                    </ul>
-                </nav>
+            <nav className={styles.breadcrumb}>
+                <ul>                        
+                    <li><Link href="/collections"><a>collections</a></Link><span>/</span></li>
+                    <li>{collection.title}</li>
+                </ul>
+            </nav>
 
+            <section id="collection-info" className={styles.collection_header}>                
                 <div className={styles.collection_header_flex}>
                     <div className={styles.collection_info}>
-                        <h1 className={styles.page_title}>{collectionInfo.title}</h1>
-                        <p className={styles.page_description}>{collectionInfo.description}</p>
+                        <h1 className={styles.page_title}>{collection.title}</h1>
+                        <p className={styles.page_description}>{collection.description}</p>
                     </div>                    
 
                     <div className={styles.collection_banner}>
-                        <Image src={collectionInfo.image.url} layout="fill" objectFit="cover" />
+                        <Image src={collection.image.url} layout="fill" objectFit="cover" />
                     </div>
-                </div>
-                
+                </div>                
             </section>
 
             <section id="collection-products" className={styles.collection_main}>
@@ -62,7 +61,10 @@ const Collection = ({ collectionInfo }) => {
                             <article key={idx} className={styles.product_item}>
                                 <Link href={`/product/${product.node.handle}`} passHref>
                                     <a>
-                                        <Image src={product.node.variants.edges[0].node.image.url} layout="fill" objectFit="contain" className={styles.image} />                                    
+                                        <div className={styles.image_wrapper}>
+                                            <Image src={product.node.variants.edges[0].node.image.url} layout="fill" objectFit="contain" className={styles.image} />    
+                                        </div>
+                                        
                                         <h2 className={styles.product_title}>{product.node.title}</h2>
                                         <p className={styles.product_type_tags}>
                                             <span className={styles.tags}>{product.node.productType},</span> 
@@ -83,11 +85,9 @@ const Collection = ({ collectionInfo }) => {
                     })}
                 </div>
             </section>
-
         </main>
     )
 }
-
 
 export const getServerSideProps = async ({params}) => {            
     const handle = params.id        
@@ -102,4 +102,5 @@ export const getServerSideProps = async ({params}) => {
         },
     }
 }
+
 export default Collection

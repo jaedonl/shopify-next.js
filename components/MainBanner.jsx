@@ -16,7 +16,7 @@ const MainBanner = () => {
     }    
 
     return (
-        <div className={styles.container}>
+        <section className={styles.container}>
             <div className={styles.arrowContainer} style={{ left: 0 }} onClick={()=>handleArrow("left")}>
                 <Image src="/assets/arrowl.png" alt="left arrow" layout="fill" objectFit="contain" />
             </div>  
@@ -31,7 +31,7 @@ const MainBanner = () => {
                     </div>
                 ))}         
             </div>
-        </div>
+        </section>
     )
 }
 

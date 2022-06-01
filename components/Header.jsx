@@ -16,13 +16,13 @@ const Header = () => {
                         <li>
                             <Link href="/collections/all">Shop</Link>  
                             <ul className={styles.nested_nav}>
-                                <li><Link href="/collections/furniture">Furniture</Link></li>
+                                <li><Link href="/collections/beds">Beds</Link></li>
                                 <li><Link href="/collections/lighting">Lights</Link></li>
                                 <li><Link href="/collections/decor">Decor</Link></li>
                             </ul>
                         </li>
 
-                        <li><Link href="/collections/furniture">Furniture</Link></li>
+                        <li><Link href="/collections/beds">Beds</Link></li>
                         <li><Link href="/collections/lighting">Lights</Link></li>
                         <li><Link href="/collections/decor">Decor</Link></li>
                     </ul>

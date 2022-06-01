@@ -1,34 +1,33 @@
-.container {
+.template {
     padding: 2rem;
     max-width: 120rem;
     margin: 0 auto;
 
+    .breadcrumb {
+        ul {
+            display: flex;
 
-    .collection_header {
-        .breadcrumb {
-            ul {
-                display: flex;
-    
-                li {
-                    font-size: 14px;
-                    color: #0f0f0f;
-    
-                    &:last-child {
-                        font-weight: 600;
-                    }
-                    a {                        
-                        &:hover {
-                            text-decoration: underline;              
-                        }
-                    }
-                    span {
-                        padding: 0 5px;
+            li {
+                font-size: 14px;
+                color: #0f0f0f;
+                text-transform: capitalize;
+
+                &:last-child {
+                    font-weight: 600;
+                }
+                a {                        
+                    &:hover {
+                        text-decoration: underline;              
                     }
                 }
-                
+                span {
+                    padding: 0 5px;
+                }
             }
+            
         }
-        
+    }
+    .collection_header {        
         .collection_header_flex {
             display: flex;
             gap: 25px;
@@ -93,20 +92,25 @@
                     }
                      
                     .image {                            
-                        transition: all .3s ease;
+                        transition: all .3s ease;                        
                         transform: scale(102%);
                         opacity: .8;                               
                     }
                 }
-                span {
-                    position: relative !important;
 
-                    .image {
-                        position: relative !important;
-                        width: 100% !important;
-                        height: 100% !important;
+                .image_wrapper {
+                    border: 1px solid #eee;
+                    background: #000;
+                    span {
+                        position: relative !important;                        
+                        .image {
+                            position: relative !important;
+                            width: 100% !important;
+                            height: 100% !important;                        
+                        }
                     }
                 }
+                
 
                 .product_title {
                     margin: 1rem 0 .5rem;
