@@ -32,37 +32,44 @@
         gap: 25px;
 
         .product_images_container {
-            flex: 1;
+            flex: 1.7;
+            height: 100%;
+
             span {
                 position: relative !important;
                 img {
                     position: relative !important;
                     width: 100% !important;
-                    height: 100% !important;                                                
+                    height: 100% !important;
                 }
             }
 
-            .current_image {                
-                
-            }
-
             .thumbnail_container {
-                
+                .imageWrapper {
+                    border: 25px solid #ccc;
+
+                    &:first-child {
+                        margin-bottom: 4rem;
+                        border: 1px solid #ccc;
+                    }
+                }
             }
         }
 
-        .product_info_container {
+        .product_info_container {            
             flex: 1;
+            position: sticky;
+            align-self: flex-start;
+            top: calc(75px + 2rem);
 
+            .product_vendor {
+                font-weight: 500;
+            }
             .product_title {
                 font-size: 2.5rem;
                 font-weight: 600;
                 margin: 0 0 .5rem;
-            }      
-            .product_description {
-                font-size: 1rem;
-                line-height: 1.5;
-            }
+            }                  
             .product_tags {
                 margin: 0 0 1rem;
                 .tag {
@@ -95,6 +102,137 @@
                     font-size: 1rem;
                     font-weight: 400;
                 }
+            }
+
+            .product_description {
+                font-size: 1rem;
+                line-height: 1.5;
+                margin: 1rem 0 0 0;
+            }
+
+            .qty_and_cart {
+                display: flex;
+                justify-content: space-between;
+            }
+            .input_quantity_wrapper {
+                margin-top: 2rem;
+                .input_label {
+                    display: block;
+                }
+
+                .input_container {                    
+                    .input_quantity_box {
+                        display: flex;                        
+                        align-items: center;                                                
+                        border: 1px solid #000;
+                        width: fit-content;          
+                        margin-top: 5px; 
+
+                        .quantity_button {
+                            background: none;
+                            border: none;
+                            cursor: pointer;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            width: 3rem;
+                            height: 3rem;
+                            transition: all .2s ease;
+
+                            &:hover {
+                                background: #444;
+                                color: #fff;
+                            }
+
+                            svg {
+                                width: 1rem;
+                                height: 1rem;
+                            }
+                        }
+
+                        .quantity_input {
+                            border: none;
+                            text-align: center;                            
+                            width: 3rem;
+
+                            &::-webkit-outer-spin-button,
+                            &::-webkit-inner-spin-button {
+                                -webkit-appearance: none;
+                                margin: 0;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+
+            .cart_checkout {
+                margin-top: 2rem;
+
+                .button_wrapper {
+                    button {
+                        background: none;
+                        border: 1px solid #000;                        
+                        width: 15rem;
+                        padding: 15px 0;
+                        margin-bottom: .5rem;
+                        cursor: pointer;
+                        transition: all .2s ease;
+
+                        &:hover {
+                            background: #444;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+
+            .detail_info {        
+                margin-top: 2rem;
+
+                details {                        
+                    &:first-child {
+                        border-top: 1px solid #aaa;                        
+                    }                                 
+                    border-bottom: 1px solid #aaa;
+                    padding: 15px;
+                    list-style: none;
+                    
+
+                    summary {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        cursor: pointer;
+
+                        &.rotate {
+                            span {
+                                &:last-child {
+                                    transform: rotate(45deg) !important;
+                                }
+                            }
+                        }
+
+                        .key {
+                            text-transform: capitalize;
+                            color: #333333;
+                            font-weight: 500;
+                        }
+
+                        .indicator {
+                            font-size: 1.5rem;
+                            font-weight: 400;                            
+                        }
+                    }
+                    .value {                        
+                        margin-top: 15px;
+                        list-style: inside;
+                        color: #333333;
+                        font-weight: 400;
+                        padding-left: 1rem;
+                    }
+                }            
             }
         }
         

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { fetchCollectionInfo } from '../../lib/shopify'
 import styles from '../../styles/Collection.module.scss'
+import ProductCard from '../../components/ProductCard'
 
 const Collection = ({ collectionInfo }) => {
     const [collection, setCollection] = useState(collectionInfo)
@@ -12,6 +13,7 @@ const Collection = ({ collectionInfo }) => {
     const router = useRouter()             
 
     useEffect(() => {
+        setCollection(collectionInfo)
         setProducts([collectionInfo.products.edges])
     }, [router])              
     
@@ -55,32 +57,18 @@ const Collection = ({ collectionInfo }) => {
                 </div>
                 <div className={styles.product_list}>
                     {products[0].map((product, idx) => {     
-                        let intAndDec = Number(product.node.variants.edges[0].node.priceV2.amount).toFixed(2).split('.')                        
+                        let intAndDec = Number(product.node.variants.edges[0].node.priceV2.amount).toFixed(2).split('.')
                         
                         return (
-                            <article key={idx} className={styles.product_item}>
-                                <Link href={`/product/${product.node.handle}`} passHref>
-                                    <a>
-                                        <div className={styles.image_wrapper}>
-                                            <Image src={product.node.variants.edges[0].node.image.url} layout="fill" objectFit="contain" className={styles.image} />    
-                                        </div>
-                                        
-                                        <h2 className={styles.product_title}>{product.node.title}</h2>
-                                        <p className={styles.product_type_tags}>
-                                            <span className={styles.tags}>{product.node.productType},</span> 
-                                            {product.node.tags.map((tag, idx) => (
-                                            <span key={idx} className={styles.tags}> {tag}<span className={styles.comma}>,</span></span>
-                                            ))}
-                                        </p>                                    
-                                        <span className={styles.product_price}>          
-                                            <span className={styles.dollar}>$</span>
-                                            <span className={styles.integer}>{intAndDec[0]}</span>
-                                            <span className={styles.decimals}>.{intAndDec[1]}</span>
-                                            <span className={styles.currency}>{product.node.variants.edges[0].node.priceV2.currencyCode}</span>
-                                        </span>                  
-                                    </a>
-                                </Link>                  
-                            </article>
+                            <ProductCard 
+                                handle={product.node.handle} 
+                                imgUrl={product.node.variants.edges[0].node.image.url} 
+                                title={product.node.title} 
+                                productType={product.node.productType} 
+                                tags={product.node.tags} integer={intAndDec[0]} 
+                                decimals={intAndDec[1]} 
+                                currency={product.node.variants.edges[0].node.priceV2.currencyCode} 
+                            />
                         )                        
                     })}
                 </div>
