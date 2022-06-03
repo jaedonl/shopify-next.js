@@ -46,7 +46,7 @@
 
             .thumbnail_container {
                 .imageWrapper {
-                    border: 25px solid #ccc;
+                    border: 1.5rem solid #000;
 
                     &:first-child {
                         margin-bottom: 4rem;
@@ -113,6 +113,7 @@
             .qty_and_cart {
                 display: flex;
                 justify-content: space-between;
+                align-items: flex-end;
             }
             .input_quantity_wrapper {
                 margin-top: 2rem;
@@ -152,8 +153,10 @@
                         }
 
                         .quantity_input {
+                            background: none;
                             border: none;
-                            text-align: center;                            
+                            text-align: center;    
+                            font-size: 1rem;                        
                             width: 3rem;
 
                             &::-webkit-outer-spin-button,
@@ -176,7 +179,7 @@
                         border: 1px solid #000;                        
                         width: 15rem;
                         padding: 15px 0;
-                        margin-bottom: .5rem;
+                        margin-top: .5rem;
                         cursor: pointer;
                         transition: all .2s ease;
 
@@ -204,15 +207,7 @@
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
-                        cursor: pointer;
-
-                        &.rotate {
-                            span {
-                                &:last-child {
-                                    transform: rotate(45deg) !important;
-                                }
-                            }
-                        }
+                        cursor: pointer;                        
 
                         .key {
                             text-transform: capitalize;
@@ -222,7 +217,8 @@
 
                         .indicator {
                             font-size: 1.5rem;
-                            font-weight: 400;                            
+                            font-weight: 400;      
+                            transition: all .2s ease;                      
                         }
                     }
                     .value {                        
@@ -232,7 +228,7 @@
                         font-weight: 400;
                         padding-left: 1rem;
                     }
-                }            
+                }                         
             }
         }
         

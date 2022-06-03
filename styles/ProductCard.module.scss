@@ -28,7 +28,8 @@
     
 
     .product_title {
-        margin: 1rem 0 .5rem;
+        // margin: 1rem 0 .5rem;
+        margin: 1rem .5rem .5rem;
         font-weight: 500;
         font-size: 1.5rem;
         display: inline-block;
@@ -36,7 +37,9 @@
     }
 
     .product_type_tags {
-        margin: 0 0 0.5rem;
+        // margin: 0 0 0.5rem;
+        margin: 0 .5rem 0.5rem;
+        font-size: .9rem;
         span {
             text-transform: capitalize;
 
@@ -53,6 +56,7 @@
     .product_price {
         display: flex;
         gap: 2px;
+        margin-left: .5rem;
                                 
         .dollar {
             font-size: 1rem;

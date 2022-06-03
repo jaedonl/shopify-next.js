@@ -29,3 +29,7 @@ li {
 .visually-hidden {
     visibility: hidden;
 }
+
+.rotate {
+    transform: rotate(45deg) !important;
+}

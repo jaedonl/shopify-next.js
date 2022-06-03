@@ -3,10 +3,13 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
 import MainBanner from '../components/MainBanner'
 import CollectionList from '../components/CollectionList'
-import { fetchAllCollection } from '../lib/shopify'
+import MainBestseller from '../components/MainBestseller';
+import { fetchAllCollection, fetchCollectionInfo } from '../lib/shopify'
 
-export default function Home({collections}) {
+
+export default function Home({ collections, bestseller }) {
     const [allCollections, setAllCollections] = useState(collections)    
+    const [bestsellerCollection, setBestsellerCollection] = useState(bestseller)
     
     return (
         <main className={styles.template}>
@@ -18,44 +21,26 @@ export default function Home({collections}) {
             
             <h1 className={styles.page_heading} title="Homepage">JdonL Homepage</h1>
             
-            <section>
-                <MainBanner/>
-            </section>
-
-            <section>
-                <CollectionList collections={allCollections} />
-            </section>
-
-            <section style={{height: "30vh"}}></section>        
+            <MainBanner/>
+            <CollectionList collections={allCollections} />
+            <MainBestseller bestseller={bestsellerCollection} />
+                        
         </main>
     )
 }
 
-export const getServerSideProps = async (context) => {
-    // const smartCollection = `https://${process.env.SHOPIFY_STORE_DOMAIN}/admin/api/2022-04/smart_collections.json`
-    // const customCollection = `https://${process.env.SHOPIFY_STORE_DOMAIN}/admin/api/2022-04/collections/270853537837.json`
-    // const headers = {"X-Shopify-Access-Token": process.env.SHOPIFY_ADMIN_ACCESSTOKEN,"Content-Type": "application/json"}
-    // const smartRes = await axios.get(smartCollection, { headers })
-    // const bestsellerRes = await axios.get(customCollection, { headers })    
-    // const smartcollections = smartRes.data.smart_collections.filter(item => item.title !== 'All')
-    // const bestsellerCollections = [bestsellerRes.data.collection]
-    // const allCollections = bestsellerCollections.concat(smartcollections)
-
+export const getServerSideProps = async (context) => {    
     const res = await fetchAllCollection()
     const data = res.body.data.collections.nodes
-    
-    const allCollection = data.filter(item => item.title !== 'All')    
-    const index = allCollection.findIndex(el => el.title == 'Bestseller')
-    const node = allCollection[index]
-    
-    allCollection.splice(index, 1)
-    allCollection.unshift(node)
+    const allCollection = data.filter(item => (item.title !== 'All' && item.title !== 'Bestseller'))
 
-    console.log(allCollection)
-
+    const resBestseller = await fetchCollectionInfo('bestseller')
+    const bestsellers = resBestseller.body.data.collectionByHandle
+    
     return {
         props: {
             collections: allCollection,
+            bestseller: bestsellers,
         },
     }
 }

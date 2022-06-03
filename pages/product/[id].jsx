@@ -8,17 +8,33 @@ import styles from '../../styles/Product.module.scss'
 const Proudct = ({productData}) => {
     const [product, setProduct] = useState(productData)
     const [productImages, setProductImages] = useState(product.images.edges)     
-    // for cart
     const [price, setPrice] = useState()
-    const [quantity, setQuantity] = useState(1)
+    const [qty, setQty] = useState(1)
 
-    const intAndDec = Number(product.variants.nodes[0].price).toFixed(2).split('.')
-
-    console.log(product);        
+    const intAndDec = Number(product.variants.nodes[0].price).toFixed(2).split('.')    
     
-    const openDetail = (e) => {
-        const nodes = document.querySelector(`#${e.target.getAttribute('name')}`).classList.add('rotate')        
+    const openDetail = (e) => {        
+        const node = e.currentTarget.lastElementChild        
+        if (node.classList.contains('rotate')) node.classList.remove('rotate')            
+        else node.classList.add('rotate')
     }
+
+    const handleQty = (e) => {
+        if ((qty > 1 && e.currentTarget.getAttribute('name') === 'minus')) {
+            setQty(qty - 1)
+        }
+        else if (e.currentTarget.getAttribute('name') === 'plus') {
+            setQty(qty + 1)
+        }
+    }
+
+    const handleTotal = () => {
+
+    }
+
+    useEffect(() => {
+        console.log(qty);
+    }, [qty])
 
     return (
         <main className={styles.template}>
@@ -73,13 +89,24 @@ const Proudct = ({productData}) => {
 
                             <div className={styles.input_container}>
                                 <div className={styles.input_quantity_box}>                            
-                                    <button className={styles.quantity_button} name="minus" type="button" aria-label="Decrease quantity for Bed One">
+                                    <button className={styles.quantity_button} name="minus" type="button" aria-label="Decrease quantity for Bed One" onClick={handleQty}>
                                         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" className={`${styles.icon} ${styles.icon_minus}`} fill="none" viewBox="0 0 10 2"><path fill-rule="evenodd" clip-rule="evenodd" d="M.5 1C.5.7.7.5 1 .5h8a.5.5 0 110 1H1A.5.5 0 01.5 1z" fill="currentColor"></path></svg>
                                     </button>
 
-                                    <input className={styles.quantity_input} type="number" name="quantity" id="quantity_input" min="1" value="1" aria-label="quantity input" />
+                                    <input 
+                                        className={styles.quantity_input} 
+                                        type="number" 
+                                        name="quantity" 
+                                        id="quantity_input"                                         
+                                        defaultValue="1" 
+                                        aria-label="quantity input" 
+                                        min="1"
+                                        value={qty}
+                                        onChange={(e)=>setQty(e.target.value)}
+                                        // onChange={handleTotal}
+                                    />
 
-                                    <button className={styles.quantity_button} name="plus" type="button" aria-label="Increase quantity for Bed On">
+                                    <button className={styles.quantity_button} name="plus" type="button" aria-label="Increase quantity for Bed On" onClick={handleQty} >
                                         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" className={`${styles.icon} ${styles.icon_plus}`}fill="none" viewBox="0 0 10 10"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 4.51a.5.5 0 000 1h3.5l.01 3.5a.5.5 0 001-.01V5.5l3.5-.01a.5.5 0 00-.01-1H5.5L5.49.99a.5.5 0 00-1 .01v3.5l-3.5.01H1z" fill="currentColor"></path></svg>
                                     </button>
                                 </div>
@@ -96,7 +123,7 @@ const Proudct = ({productData}) => {
                         </div>
                     </div>
                     <div className={styles.detail_info}>                            
-                        {product.metafields.nodes.map((item, idx) => {                
+                        {/* {product.metafields.nodes.map((item, idx) => {                
                             return (
                                 <details key={idx}>
                                     <summary onClick={openDetail} id={item.key} name={item.key}>
@@ -106,7 +133,7 @@ const Proudct = ({productData}) => {
                                     <li className={styles.value}>{item.value}</li>
                                 </details>
                             )
-                        })}
+                        })} */}
                     </div>              
                 </div>                
             </section>            
@@ -114,12 +141,18 @@ const Proudct = ({productData}) => {
     )
 }
 
-export const getServerSideProps = async ({params}) => {            
+export const getServerSideProps = async ({params}) => {                
     const handle = params.id        
-    const res = await fetchProductByHandle(handle)        
-
-    const data = res.body.data.productByHandle    
+    const res = await fetchProductByHandle(handle)      
     
+    // metafields (first: 10, namespace: "product_info") {
+    //     nodes {
+    //         key
+    //         value
+    //     }
+    // }
+    const data = res.body.data.productByHandle
+
     return {
         props: {
             productData: data,       
