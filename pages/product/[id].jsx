@@ -4,14 +4,23 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { fetchProductByHandle } from '../../lib/shopify'
 import styles from '../../styles/Product.module.scss'
+import { useDispatch } from "react-redux";
+import { addProduct, reset } from "../../redux/cartSlice";
 
-const Proudct = ({productData}) => {
+const Proudct = ({productData, productData2}) => {
     const [product, setProduct] = useState(productData)
     const [productImages, setProductImages] = useState(product.images.edges)     
-    const [price, setPrice] = useState()
-    const [qty, setQty] = useState(1)
+    const [productInfoFields, setProductInfoFields] = useState([product.dimensions, product.weight, product.colors, product.materials])        
+    const [qty, setQty] = useState(1)        
+    const [price, setPrice] = useState(Number(product.variants.nodes[0].price))
+    const [total, setTotal] = useState(Number(product.variants.nodes[0].price))    
+    const intAndDec = Number(product.variants.nodes[0].price).toFixed(2).split('.')        
+    const dispatch = useDispatch()    
+        
 
-    const intAndDec = Number(product.variants.nodes[0].price).toFixed(2).split('.')    
+    useEffect(() => {
+        setTotal(qty * price)                
+    }, [qty])
     
     const openDetail = (e) => {        
         const node = e.currentTarget.lastElementChild        
@@ -28,13 +37,11 @@ const Proudct = ({productData}) => {
         }
     }
 
-    const handleTotal = () => {
-
-    }
-
-    useEffect(() => {
-        console.log(qty);
-    }, [qty])
+    const addToCart = () => {        
+        dispatch(
+            addProduct({ ...product, qty, total})
+        )        
+    }        
 
     return (
         <main className={styles.template}>
@@ -103,7 +110,7 @@ const Proudct = ({productData}) => {
                                         min="1"
                                         value={qty}
                                         onChange={(e)=>setQty(e.target.value)}
-                                        // onChange={handleTotal}
+                                        
                                     />
 
                                     <button className={styles.quantity_button} name="plus" type="button" aria-label="Increase quantity for Bed On" onClick={handleQty} >
@@ -115,7 +122,7 @@ const Proudct = ({productData}) => {
 
                         <div className={styles.cart_checkout}>
                             <div className={styles.button_wrapper}>
-                                <button type="submit" name="add to cart" aria-label="add to cart" className={styles.add_to_cart_button}>ADD TO CART</button>
+                                <button type="submit" name="add to cart" aria-label="add to cart" className={styles.add_to_cart_button} onClick={addToCart}>ADD TO CART</button>
                             </div>                        
                             <div className={styles.button_wrapper}>
                                 <button type="submit" name="buy now" aria-label="buy now" className={styles.buy_now_button}>BUY NOW</button>
@@ -123,7 +130,8 @@ const Proudct = ({productData}) => {
                         </div>
                     </div>
                     <div className={styles.detail_info}>                            
-                        {/* {product.metafields.nodes.map((item, idx) => {                
+                    
+                        {productInfoFields.map((item, idx) => {                
                             return (
                                 <details key={idx}>
                                     <summary onClick={openDetail} id={item.key} name={item.key}>
@@ -133,7 +141,7 @@ const Proudct = ({productData}) => {
                                     <li className={styles.value}>{item.value}</li>
                                 </details>
                             )
-                        })} */}
+                        })}
                     </div>              
                 </div>                
             </section>            
@@ -144,13 +152,7 @@ const Proudct = ({productData}) => {
 export const getServerSideProps = async ({params}) => {                
     const handle = params.id        
     const res = await fetchProductByHandle(handle)      
-    
-    // metafields (first: 10, namespace: "product_info") {
-    //     nodes {
-    //         key
-    //         value
-    //     }
-    // }
+        
     const data = res.body.data.productByHandle
 
     return {
