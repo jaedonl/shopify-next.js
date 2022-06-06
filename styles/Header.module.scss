@@ -78,6 +78,27 @@
                     height: 30px;
                     padding: 5px;
                 }
+                li {
+                    position: relative;
+                    svg {
+                        width: 4.4rem;
+                        height: 4.4rem;                        
+                    }
+                    .cart_qty {
+                        position: absolute;
+                        bottom: 1rem;
+                        right: .5rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;    
+                        border-radius: 50%;
+                        background: #000;
+                        color: #fff;
+                        width: 20px;
+                        height: 20px;
+                        font-size: 14px;                      
+                    }
+                }
             }
         }
     }

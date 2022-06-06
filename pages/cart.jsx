@@ -5,7 +5,6 @@ import Image from 'next/image'
 import styles from '../styles/Cart.module.scss'
 import { useDispatch, useSelector } from "react-redux";
 
-
 const cart = () => {
     const cart = useSelector(state => state.cart)
     const dispatch = useDispatch()    
