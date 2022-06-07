@@ -7,7 +7,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({ 
-    cart: cartReducer    
+    cart: cartReducer
 })
 
 const persistConfig = {

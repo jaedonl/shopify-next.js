@@ -17,7 +17,7 @@ export default function Home({ collections, bestseller }) {
                 <title>Shopify with Next.js</title>
                 <meta name="description" content="Shopify with Next.js" />
                 <link rel="icon" href="/favicon.ico" />
-            </Head>
+            </Head>            
             
             <h1 className={styles.page_heading} title="Homepage">JdonL Homepage</h1>
             

@@ -4,9 +4,10 @@ import styles from "../styles/Header.module.scss";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import {Search, PersonOutlineOutlined, ShoppingBagOutlined} from '@mui/icons-material';
-// import { fetchMenuItems } from '../lib/shopify'
+
 
 const Header = () => {   
+    const [menu, setMenu] = useState()
     const cart = useSelector(state => state.cart)
 
     return (
