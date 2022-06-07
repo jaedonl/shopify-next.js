@@ -80,14 +80,19 @@
                 }
                 li {
                     position: relative;
-                    svg {
-                        width: 4.4rem;
-                        height: 4.4rem;                        
-                    }
+                    svg {                        
+                        cursor: pointer;
+                        width: 2rem;
+                        height: 2rem;
+                        transition: all .1s ease;
+                        &:hover {
+                            transform: scale(110%);
+                        }
+                    }                   
                     .cart_qty {
                         position: absolute;
-                        bottom: 1rem;
-                        right: .5rem;
+                        bottom: 0rem;
+                        right: -0.5rem;
                         display: flex;
                         align-items: center;
                         justify-content: center;    

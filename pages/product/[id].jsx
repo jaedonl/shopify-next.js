@@ -7,15 +7,15 @@ import styles from '../../styles/Product.module.scss'
 import { useDispatch } from "react-redux";
 import { addProduct, reset } from "../../redux/cartSlice";
 
-const Proudct = ({productData, productData2}) => {
-    const [product, setProduct] = useState(productData)
-    const [productImages, setProductImages] = useState(product.images.edges)     
+const Proudct = ({productData}) => {    
+    const [product, setProduct] = useState(productData)    
+    const [productImages, setProductImages] = useState(product.images.edges)
     const [productInfoFields, setProductInfoFields] = useState([product.dimensions, product.weight, product.colors, product.materials])        
     const [qty, setQty] = useState(1)        
     const [price, setPrice] = useState(Number(product.variants.nodes[0].price))
     const [total, setTotal] = useState(Number(product.variants.nodes[0].price))    
     const intAndDec = Number(product.variants.nodes[0].price).toFixed(2).split('.')        
-    const dispatch = useDispatch()    
+    const dispatch = useDispatch()        
         
 
     useEffect(() => {
@@ -153,8 +153,8 @@ export const getServerSideProps = async ({params}) => {
     const handle = params.id        
     const res = await fetchProductByHandle(handle)      
         
-    const data = res.body.data.productByHandle
-
+    const data = res.body.data.product    
+    
     return {
         props: {
             productData: data,       
