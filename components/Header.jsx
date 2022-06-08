@@ -10,6 +10,8 @@ const Header = () => {
     const [menu, setMenu] = useState()
     const cart = useSelector(state => state.cart)
 
+    console.log(cart)
+
     return (
         <header className={styles.header}>
             <nav className={styles.header_nav}>

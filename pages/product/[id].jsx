@@ -14,15 +14,13 @@ const Proudct = ({productData}) => {
     const [qty, setQty] = useState(1)        
     const [price, setPrice] = useState(Number(product.variants.nodes[0].priceV2.amount))
     const [total, setTotal] = useState(Number(product.variants.nodes[0].priceV2.amount))    
-    const intAndDec = Number(product.variants.nodes[0].price).toFixed(2).split('.')        
+    const intAndDec = Number(product.variants.nodes[0].priceV2.amount).toFixed(2).split('.')        
     const dispatch = useDispatch()        
     
     console.log(product)
 
     useEffect(() => {
-        setTotal(qty * price)  
-        
-        console.log(qty, price, total)
+        setTotal(qty * price)                  
     }, [qty])
     
     const openDetail = (e) => {        
@@ -42,7 +40,7 @@ const Proudct = ({productData}) => {
 
     const addToCart = () => {        
         dispatch(
-            addProduct({ ...product, qty, total})
+            addProduct({ ...product, qty, price})
         )        
     }        
 
