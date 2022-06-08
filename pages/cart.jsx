@@ -4,22 +4,25 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Cart.module.scss'
 import { useDispatch, useSelector } from "react-redux";
+import { removeProduct } from '../redux/cartSlice'
 
 const cart = () => {
-    const cart = useSelector(state => state.cart)    
+    const cart = useSelector(state => state.cart)
     const [cartQty, setCartQty] = useState(0)
     const dispatch = useDispatch()    
 
-    console.log(cart);
+    // console.log(cart);
 
     useEffect(() => {
         cart.products.forEach(item => {
             setCartQty(cartQty += item.qty)
         });
-    }, [cart]);
+    }, []);
 
-    const removeCartItem = () => {
-        
+
+    const handleRemoveProduct = (item) => {
+        setCartQty(cartQty -= item.qty)
+        dispatch(removeProduct(item))
     }    
     
     return (
@@ -96,7 +99,7 @@ const cart = () => {
                                     <span className={styles.item_total}>${Number(item.variants.nodes[0].priceV2.amount).toFixed(2) * item.qty}</span>
 
                                     <button name="remove" type="button" aria-label="remove item" className={styles.remove_item}
-                                    onClick={removeCartItem}
+                                    onClick={() => handleRemoveProduct(item)}
                                     >Remove item</button>                                    
                                 </div>                  
                             </li>                            
@@ -135,7 +138,7 @@ const cart = () => {
                     <div className={styles.cart_checkout}>
                         <div className={styles.button_wrapper}>
                             <button type="submit" name="add to cart" aria-label="add to cart" className={styles.add_to_cart_button}
-                            //  onClick={goToCheckout}
+                            //  onClick={checkOutHandler}
                             >
                                 Checkout
                             </button>

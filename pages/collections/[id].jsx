@@ -61,6 +61,7 @@ const Collection = ({ collectionInfo }) => {
                         
                         return (
                             <ProductCard 
+                                key={idx}
                                 handle={product.node.handle} 
                                 imgUrl={product.node.variants.edges[0].node.image.url} 
                                 title={product.node.title} 

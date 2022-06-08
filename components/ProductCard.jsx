@@ -3,9 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/ProductCard.module.scss'
 
-const ProductCard = ({key, handle, imgUrl, title, productType, tags, integer, decimals, currency}) => {
+const ProductCard = ({handle, imgUrl, title, productType, tags, integer, decimals, currency}) => {
   return (
-    <article key={key} className={styles.product_item}>
+    <article className={styles.product_item}>
         <Link href={`/product/${handle}`} passHref>
             <a>
                 <div className={styles.image_wrapper}>
