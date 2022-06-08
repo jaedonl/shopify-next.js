@@ -11,6 +11,8 @@ export default function Home({ collections, bestseller }) {
     const [allCollections, setAllCollections] = useState(collections)    
     const [bestsellerCollection, setBestsellerCollection] = useState(bestseller)
     
+    
+
     return (
         <main className={styles.template}>
             <Head>
