@@ -10,14 +10,12 @@ import { fetchAllCollection, fetchCollectionInfo } from '../lib/shopify'
 export default function Home({ collections, bestseller }) {
     const [allCollections, setAllCollections] = useState(collections)    
     const [bestsellerCollection, setBestsellerCollection] = useState(bestseller)
-    
-    
 
     return (
         <main className={styles.template}>
             <Head>
-                <title>Shopify with Next.js</title>
-                <meta name="description" content="Shopify with Next.js" />
+                <title>JdonL | Home</title>
+                <meta name="description" content="JdonL Hompage" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>            
             
@@ -37,7 +35,7 @@ export const getServerSideProps = async (context) => {
     const allCollection = data.filter(item => (item.title !== 'All' && item.title !== 'Bestseller'))
 
     const resBestseller = await fetchCollectionInfo('bestseller')
-    const bestsellers = resBestseller.body.data.collectionByHandle
+    const bestsellers = resBestseller.body.data.collection    
     
     return {
         props: {

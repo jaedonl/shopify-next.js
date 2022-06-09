@@ -12,16 +12,9 @@ const Proudct = ({productData}) => {
     const [productImages, setProductImages] = useState(product.images.edges)
     const [productInfoFields, setProductInfoFields] = useState([product.dimensions, product.weight, product.colors, product.materials])        
     const [qty, setQty] = useState(1)        
-    const [price, setPrice] = useState(Number(product.variants.nodes[0].priceV2.amount))
-    // const [total, setTotal] = useState(Number(product.variants.nodes[0].priceV2.amount))    
+    const [price, setPrice] = useState(Number(product.variants.nodes[0].priceV2.amount))    
     const intAndDec = Number(product.variants.nodes[0].priceV2.amount).toFixed(2).split('.')        
     const dispatch = useDispatch()        
-    
-    // console.log(product)
-
-    // useEffect(() => {
-    //     setTotal(qty * price)                  
-    // }, [qty])
     
     const openDetail = (e) => {        
         const node = e.currentTarget.lastElementChild        

@@ -82,7 +82,7 @@ export const getServerSideProps = async ({params}) => {
     const handle = params.id        
     const res = await fetchCollectionInfo(handle)        
 
-    const collectionInfo = res.body.data.collectionByHandle    
+    const collectionInfo = res.body.data.collection    
     collectionInfo.id = collectionInfo.id.split('/').pop()        
     
     return {
