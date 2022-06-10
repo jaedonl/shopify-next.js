@@ -68,13 +68,35 @@
     .collection_main {
         padding-top: 3rem;
 
-        .sorting_filter {            
-            margin-bottom: 1rem;
+        .sort_filter_wrapper {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1.5rem;            
 
-            select {
-                padding: 10px;
+            .sorting_box {            
+                margin-bottom: 1rem;
+                height: 3rem;                
+    
+                select {
+                    padding: 10px;
+                    height: 100%;
+                }
+            }
+
+            .filter_box {
+                height: 3rem;                
+                button {                    
+                    display: flex;
+                    align-items: center;   
+                    gap: .3rem;
+                    padding: 10px;
+                    background-color: #fff;
+                    border: 1px solid;
+                    height: 100%;                                                         
+                }                            
             }
         }
+        
 
         .product_list {
             display: grid;

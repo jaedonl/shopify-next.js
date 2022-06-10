@@ -6,11 +6,12 @@ import { useSelector } from "react-redux";
 import {Search, PersonOutlineOutlined, ShoppingBagOutlined} from '@mui/icons-material';
 import axios from 'axios';
 import { useRouter } from 'next/router'
-
+import SearchBox from './SearchBox';
 
 const Header = () => {   
     const [menus, setMenus] = useState([])
     const [isMenuOn, setIsMenuOn] = useState(false)
+    const [isSearchOn, setIsSearchOn] = useState(false)
     const cart = useSelector(state => state.cart)
     const router = useRouter()
 
@@ -22,14 +23,24 @@ const Header = () => {
         fetchMenu()
     }, [])
 
-    useEffect(() => {
-        const menu = document.querySelector(`.${styles.nested_nav}`)        
-
+    useEffect(() => {        
+        setIsMenuOn(false)
+        setIsSearchOn(false)
     }, [router])
 
-    const onMenuHover = () => {
-        setIsMenuOn(true)
+    const handleSearch = () => {        
+        setIsSearchOn(!isSearchOn)                
     }
+
+    useEffect(() => {
+        if (isSearchOn) {
+            document.querySelector('main').classList.add('blur')        
+            document.body.style.overflow = "hidden";
+        } else {
+            document.querySelector('main').classList.remove('blur')        
+            document.body.style.overflow = "auto";
+        }        
+    }, [isSearchOn])
 
     return (
         <header className={styles.header}>
@@ -40,7 +51,7 @@ const Header = () => {
 
                 <nav className={styles.collection_nav}>                    
                     <ul className={styles.collection_ul}>
-                        <li className={`${styles.menu_item} ${styles.parent_menu}`} onMouseEnter={onMenuHover} onMouseLeave={onMenuHover}>
+                        <li className={`${styles.menu_item} ${styles.parent_menu}`} onMouseEnter={() => setIsMenuOn(true)} onMouseLeave={() => setIsMenuOn(false)}>
                             <Link href="/collections/all">Shop</Link>  
                             { isMenuOn &&
                                 <ul className={styles.nested_nav}>
@@ -53,7 +64,7 @@ const Header = () => {
                                                     </Link>                                                
                                                     <ul>
                                                         {menu.items.map((item, idx) => (
-                                                            <li>
+                                                            <li key={idx}>
                                                                 <Link href={`/collections/${menu.title.toLowerCase()}?${item.title.toLowerCase()}`}>
                                                                     <a>– {item.title}</a>
                                                                 </Link>
@@ -74,7 +85,6 @@ const Header = () => {
                                     })}                                
                                 </ul>                                
                             }
-
                         </li>
 
                         <li className={styles.menu_item}><Link href="/collections/beds">Beds</Link></li>
@@ -86,7 +96,7 @@ const Header = () => {
                 <nav className={styles.right_nav}>
                     <ul className={styles.right_ul}>
                         <li>                            
-                            <Search />                            
+                            <Search onClick={() => setIsSearchOn(!isSearchOn)} />                                                        
                         </li>
                         <li>
                             <Link href="/login">
@@ -103,6 +113,8 @@ const Header = () => {
                     </ul>
                 </nav>
             </nav>
+
+            { isSearchOn && <SearchBox setIsSearchOn={handleSearch} isOn={isSearchOn} /> }
         </header>
     )
 }
