@@ -19,7 +19,8 @@
             right: 0;
             font-size: 20px;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
+            border-bottom: 3px solid transparent;           
+            transition: all .2s ease; 
             padding-bottom: 5px;
 
             &:hover {
@@ -34,8 +35,8 @@
     .collection_lists {
         display: flex;
         flex-wrap: wrap;
-        row-gap: 55px;
-        column-gap: 20px;
+        row-gap: 4rem;
+        column-gap: 2rem;
         display: grid;            
         grid-template-columns: 1fr 1fr 1fr 1fr;                
 
@@ -46,7 +47,7 @@
             &:hover {                  
                 font-weight: 500;                      
                 .image {
-                    transition: all .3s ease;
+                    transition: all .2s ease;
                     transform: scale(102%);
                     opacity: .9;                         
                 }       
@@ -98,6 +99,7 @@
                         align-items: center;
                         padding: 5px 0;
                         border-bottom: 3px solid transparent;
+                        transition: all .2s ease;
 
                         span {
                             width: auto !important;

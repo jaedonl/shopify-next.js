@@ -9,32 +9,46 @@ import ProductCard from '../../components/ProductCard'
 import FilterListIcon from '@mui/icons-material/FilterList';
 
 const Collection = ({ collectionInfo }) => {
-    const [collection, setCollection] = useState(collectionInfo)
+    const [collection, setCollection] = useState(collectionInfo)    
     const [products, setProducts] = useState([collectionInfo.products.edges])
-    const router = useRouter()             
+    const [productsByQuery, setProductsByQuery] = useState([collectionInfo.products.edges])
+    const router = useRouter()          
+    const {query} = router    
 
     useEffect(() => {
-        setCollection(collectionInfo)
-        setProducts([collectionInfo.products.edges])
-    }, [router])              
+        setCollection(collectionInfo)                
+        setProducts([collectionInfo.products.edges]) 
+
+        if (query.category) { 
+            setProducts(productsByQuery)               
+            setProducts([
+                productsByQuery[0].filter(item => (item.node.materials.value.toLowerCase() === query.category && 
+                item.node.productType.toLowerCase() === query.id))
+            ])
+        }              
+    }, [router]) 
 
     const handleSort = (e) => {
-        console.log(e.target.value)
-
         if (e.target.value === "low-high") {                      
             setProducts([            
                 products[0].sort((a, b) => Number(a.node.variants.edges[0].node.priceV2.amount) - Number(b.node.variants.edges[0].node.priceV2.amount))
             ])            
-        } else if (e.target.value === "high-low") {
+        } 
+        else if (e.target.value === "high-low") {
             setProducts([            
                 products[0].sort((a, b) => Number(b.node.variants.edges[0].node.priceV2.amount) - Number(a.node.variants.edges[0].node.priceV2.amount))
             ])        
-        } else if (e.target.value === "newest") {
-            setProducts([            
-                products[0].sort((a, b) => a.node.createdAt - b.node.createdAt)
-            ])    
+        } 
+        else if (e.target.value === "name") {
+            setProducts([
+                products[0].sort((a, b) => (a.node.title > b.node.title) ? 1 : -1)
+            ])            
         }
-        
+        else if (e.target.value === "newest") {
+            setProducts([            
+                products[0].sort((a, b) => (b.node.createdAt > a.node.createdAt) ? 1 : -1)
+            ])
+        }                 
     }
 
     
@@ -68,9 +82,9 @@ const Collection = ({ collectionInfo }) => {
 
             <section id="collection-products" className={styles.collection_main}>
                 <div className={styles.sort_filter_wrapper}>
-                    <div className={styles.sorting_box}>
-                        <select name="products" id="products" onChange={handleSort}>
-                            <option value="newest">Newest</option>  
+                    <div className={styles.sorting_box}>                        
+                        <select name="sort_options" id="sort_options" onChange={handleSort}>                        
+                            <option value="newest" selected>Newest</option>  
                             <option value="low-high">Price: low to high</option>
                             <option value="high-low">Price: high to low</option>
                             <option value="name">Name</option>                                                      
@@ -78,15 +92,13 @@ const Collection = ({ collectionInfo }) => {
                     </div>       
 
                     <div className={styles.filter_box}>
-                        <button><FilterListIcon/><span>Filter</span></button>
+                        <button><FilterListIcon/><span>Filter</span></button>                        
                     </div>             
                 </div>
                 
-
                 <div className={styles.product_list}>
                     {products[0].map((product, idx) => {     
                         let intAndDec = Number(product.node.variants.edges[0].node.priceV2.amount).toFixed(2).split('.')
-                        
                         return (
                             <ProductCard 
                                 key={idx}

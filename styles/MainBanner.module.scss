@@ -1,8 +1,8 @@
-.container {
+.banner_slider {
     height: calc(80vh - 100px);
     background-color: #fffcf5;
     overflow: hidden;
-    position: relative;
+    position: relative;    
 
     .arrowContainer {
         position: absolute;
@@ -13,10 +13,27 @@
         margin: auto;
         cursor: pointer;
         z-index: 2;
+        width: 3rem;
+        height: 3rem;
+
+        svg {
+            cursor: pointer;
+            color: #000;
+            width: 100%;
+            height: 2.5rem;
+            display: flex;
+            justify-content: center;
+            opacity: .6;
+            transition: all .2s ease;
+            margin: 0;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
     }
 
     .wrapper {
-        width: 200vw;
         height: 100%;
         display: flex;
         transition: all .5s ease-in-out;  
@@ -25,6 +42,122 @@
             width: 100vw;
             height: 100%;
             position: relative;
+            display: flex;
+            
+            span {
+                position: relative !important;
+                flex: 5;
+
+                .image {
+                    position: relative !important;
+                    width: 100% !important;
+                }
+
+            }
+            
+            .right_grid {
+                display: flex;
+                flex-flow: column;       
+                flex: 2;         
+                justify-content: space-between;
+                align-items: center;
+                background-color: #eee;        
+                
+                .banner_grid {
+                    display: flex;
+                    flex-flow: column;
+                    justify-content: center;
+                    height: 50%;
+                    width: 100%;
+                    &:first-child {
+                        background-color: #666;
+                        color: #fff;
+
+                        .link_wrapper {                            
+                            .see_detail {    
+                                border: 1px solid #fff;
+                                color: #fff;
+
+                                &:hover {
+                                    background-color: #fff;
+                                    color: #000;
+                                }
+                            }
+                        }
+                    }
+                }
+            
+                .banner_grid_wrapper {
+                    margin: 0 auto;       
+                    width: 70%;                    
+                    display: flex;
+                    flex-flow: column;
+                    justify-content: center;
+                    
+
+                    .product_title {
+                        font-size: 2.5rem;
+                        font-weight: 500;
+                        margin: 0;
+                    }
+                    
+                    .product_tags {
+                        .product_tag {
+                            text-transform: capitalize;
+                            &:last-child {
+                                .comma {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+
+                    .product_price {
+                        display: flex;
+                        gap: 2px;      
+                        span {
+                            flex: none;
+                        }          
+                                                
+                        .dollar {
+                            font-size: 1rem;
+                            font-weight: 600;                            
+                        }
+                        .integer {
+                            font-size: 1.5rem;
+                            font-weight: 600;                            
+                        }
+                        .decimals {
+                            font-size: 1rem;
+                            font-weight: 600;                            
+                        }
+                        .currency {
+                            font-size: 1rem;
+                            font-weight: 400;                            
+                        }
+                    }
+
+                    .link_wrapper {
+                        margin-top: 1rem;
+                        .see_detail {             
+                            background: none;           
+                            border: 1px solid #000;                                                                    
+                            padding: 15px;
+                            margin-top: .5rem;
+                            font-size: 1.5rem;
+                            font-weight: 400;
+                            cursor: pointer;
+                            transition: all .2s ease;
+    
+                            &:hover {
+                                background: #444;
+                                color: #fff;
+                            }
+                        }
+                    }
+                    
+                }
+            }
         }
     }
 }

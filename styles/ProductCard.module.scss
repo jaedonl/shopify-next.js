@@ -7,7 +7,7 @@
         }
          
         .image {                            
-            transition: all .3s ease;                        
+            transition: all .2s ease;                        
             transform: scale(102%);
             opacity: .9;                               
         }
@@ -33,6 +33,7 @@
         font-size: 1.5rem;
         display: inline-block;
         border-bottom: 3px solid transparent;
+        transition: all .2s ease;
     }
 
     .product_type_tags {

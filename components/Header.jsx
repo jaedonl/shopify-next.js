@@ -52,9 +52,14 @@ const Header = () => {
                 <nav className={styles.collection_nav}>                    
                     <ul className={styles.collection_ul}>
                         <li className={`${styles.menu_item} ${styles.parent_menu}`} onMouseEnter={() => setIsMenuOn(true)} onMouseLeave={() => setIsMenuOn(false)}>
-                            <Link href="/collections/all">Shop</Link>  
+                            <span>Shop</span>
                             { isMenuOn &&
                                 <ul className={styles.nested_nav}>
+                                    <li className={styles.child_menu}>
+                                        <Link href="/collections/all">
+                                            <a className={styles.child_link}>Shop All</a>
+                                        </Link>
+                                    </li>
                                     {menus.map((menu, idx) => {
                                         if (menu.items.length > 0) {
                                             return (
@@ -65,7 +70,7 @@ const Header = () => {
                                                     <ul>
                                                         {menu.items.map((item, idx) => (
                                                             <li key={idx}>
-                                                                <Link href={`/collections/${menu.title.toLowerCase()}?${item.title.toLowerCase()}`}>
+                                                                <Link href={`/collections/${menu.title.toLowerCase()}?category=${item.title.toLowerCase()}`}>
                                                                     <a>– {item.title}</a>
                                                                 </Link>
                                                             </li>

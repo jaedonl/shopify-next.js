@@ -20,7 +20,7 @@ const MainBestseller = ({bestseller}) => {
                 </div>                
 
                 <div className={styles.product_list}>
-                    {best[0].map((product, idx) => {     
+                    {best[0].slice(0, 5).map((product, idx) => {     
                         let intAndDec = Number(product.node.variants.edges[0].node.priceV2.amount).toFixed(2).split('.')
                         
                         return (

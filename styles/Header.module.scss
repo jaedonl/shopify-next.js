@@ -47,44 +47,47 @@
                 .menu_item {
                     padding: 0px 10px;
                     height: 100%;
-                    border-bottom: 3px solid transparent;
+                    cursor: pointer;
+                    border-bottom: 3px solid transparent;                    
+                    transition: all .2s ease;                    
 
                     &:hover {
                         border-bottom: 3px solid #000;
                     }
-                    
+                    span {
+                        height: 100%;
+                        display: flex;
+                        align-items: center; 
+                        font-size: 1rem;                        
+                    }
                     a {                        
                         height: 100%;
                         display: flex;
                         align-items: center; 
+                        font-size: 1rem;
                     }        
                     
-                    &.parent_menu {      
-                        // &:hover {
-                        //     .nested_nav {
-                        //         visibility: visible;
-                        //         opacity: 1;
-                        //     }
-                        // }            
-                        .nested_nav {
-                            // visibility: hidden;
-                            // opacity: 0;
+                    &.parent_menu {                                 
+                        .nested_nav {                            
                             transition: all .2s ease;
                             position: absolute;
                             left: 0;
                             min-width: 100%;                    
                             background: #fff;
                             border: 1px solid #aaa;      
+                            box-shadow: 5px 5px 14px -8px #000000;                            
         
                             .child_menu {
                                 padding: 20px 20px;                                
                                 display: flex;
-                                border-bottom: 1px solid #aaa;  
+                                border-bottom: 1px solid #aaa;
+                                transition: all .2s ease;
+                                
                                 &:hover {
                                     background: #444;
                                     color: #fff;
 
-                                    ul {
+                                    ul {                                        
                                         li {
                                             color: #fff;
                                             &:hover {
