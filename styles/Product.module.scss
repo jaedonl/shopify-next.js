@@ -102,6 +102,13 @@
                     font-size: 1rem;
                     font-weight: 400;
                 }
+                .compared_price { 
+                    margin-left: .2rem;
+                    font-size: 1rem; 
+                    font-weight: 400; 
+                    color: #f5626e; 
+                    text-decoration: line-through;
+                }
             }
 
             .product_description {

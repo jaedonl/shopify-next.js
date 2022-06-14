@@ -13,7 +13,8 @@ const Proudct = ({productData}) => {
     const [productInfoFields, setProductInfoFields] = useState([product.dimensions, product.weight, product.colors, product.materials])        
     const [qty, setQty] = useState(1)        
     const [price, setPrice] = useState(Number(product.variants.nodes[0].priceV2.amount))    
-    const intAndDec = Number(product.variants.nodes[0].priceV2.amount).toFixed(2).split('.')        
+    const amountIntAndDec = Number(product.variants.nodes[0].priceV2.amount).toFixed(2).split('.')
+    const comparedIntAndDec = Number(product.compareAtPriceRange.maxVariantPrice.amount).toFixed(2)    
     const dispatch = useDispatch()        
     
     const openDetail = (e) => {        
@@ -71,9 +72,10 @@ const Proudct = ({productData}) => {
 
                     <div className={styles.product_price}>          
                         <span className={styles.dollar}>$</span>
-                        <span className={styles.integer}>{intAndDec[0]}</span>
-                        <span className={styles.decimals}>.{intAndDec[1]}</span>
+                        <span className={styles.integer}>{amountIntAndDec[0]}</span>
+                        <span className={styles.decimals}>.{amountIntAndDec[1]}</span>
                         <span className={styles.currency}>USD</span>
+                        {comparedIntAndDec > 0 && <span className={styles.compared_price}>${comparedIntAndDec}</span>}                        
                     </div>
 
                     <p className={styles.product_description}>

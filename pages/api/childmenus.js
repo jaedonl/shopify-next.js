@@ -1,7 +1,7 @@
-import { fetchCollectionInfo } from '../../lib/shopify'
+import { fetchCollectionMetafields } from '../../lib/shopify'
 
 const handler = async (req, res) => {            
-    const collection = await fetchCollectionInfo(req.query.handle)
+    const collection = await fetchCollectionMetafields(req.query.handle)
 
     try {
         res.status(200).json(collection)   

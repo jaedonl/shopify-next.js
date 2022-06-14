@@ -34,7 +34,7 @@ const cart = () => {
     }
     
     return (
-        <div className={styles.template}>
+        <main className={styles.template}>
             <Head>
                 <title>JdonL | Cart</title>
                 <meta name="description" content="Cart page JdonL" />
@@ -152,7 +152,7 @@ const cart = () => {
                 </div>
             </div>
             )}                        
-        </div>
+        </main>
     )
 }
 

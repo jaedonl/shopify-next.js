@@ -10,6 +10,7 @@ import SearchBox from './SearchBox';
 
 const Header = () => {   
     const [menus, setMenus] = useState([])
+    const [childMenus, setChildMenus] = useState([])
     const [isMenuOn, setIsMenuOn] = useState(false)
     const [isSearchOn, setIsSearchOn] = useState(false)
     const cart = useSelector(state => state.cart)
@@ -26,11 +27,7 @@ const Header = () => {
     useEffect(() => {        
         setIsMenuOn(false)
         setIsSearchOn(false)
-    }, [router])
-
-    const handleSearch = () => {        
-        setIsSearchOn(!isSearchOn)                
-    }
+    }, [router])    
 
     useEffect(() => {
         if (isSearchOn) {
@@ -41,6 +38,13 @@ const Header = () => {
             document.body.style.overflow = "auto";
         }        
     }, [isSearchOn])
+
+    const handleSearch = () => setIsSearchOn(!isSearchOn)
+
+    const showCategory = async (e) => {
+        const res = await axios.get('/api/childmenus', {params: { handle: e.currentTarget.getAttribute('name').toLowerCase() }})
+        console.log(res.data.body.data.collection)            
+    }
 
     return (
         <header className={styles.header}>
@@ -60,14 +64,16 @@ const Header = () => {
                                             <a className={styles.child_link}>Shop All</a>
                                         </Link>
                                     </li>
-                                    {menus.map((menu, idx) => {
+                                    {menus.map((menu, idx) => {                                        
                                         if (menu.items.length > 0) {
                                             return (
-                                                <li className={styles.child_menu}>
+                                                <li key={idx} className={styles.child_menu} name={menu.title} onMouseOver={showCategory}>
                                                     <Link href={`/collections/${menu.title.toLowerCase()}`}>
                                                         <a className={styles.child_link}>{menu.title}</a>
-                                                    </Link>                                                
-                                                    <ul>
+                                                    </Link>          
+
+
+                                                    {/* <ul className={styles.grand_child}>
                                                         {menu.items.map((item, idx) => (
                                                             <li key={idx}>
                                                                 <Link href={`/collections/${menu.title.toLowerCase()}?category=${item.title.toLowerCase()}`}>
@@ -75,7 +81,7 @@ const Header = () => {
                                                                 </Link>
                                                             </li>
                                                         ))}
-                                                    </ul>
+                                                    </ul> */}
                                                 </li>
                                             )                                        
                                         } else {

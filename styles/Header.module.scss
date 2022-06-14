@@ -101,7 +101,7 @@
                                     border-bottom: none;
                                 }
                                 
-                                .child_link {                                    
+                                .child_link {                         
                                     flex: 1;       
                                     &:hover {
                                         text-decoration: underline;
@@ -114,12 +114,13 @@
                                     }
                                 }
            
-                                ul {
+                                .grand_child {
                                     flex: 1;
                                     display: flex;
                                     flex-direction: column;
                                     gap: 1rem;
-                                    li {                                        
+
+                                    li {
                                         color: #555;
 
                                         &:hover {

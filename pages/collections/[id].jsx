@@ -16,16 +16,19 @@ const Collection = ({ collectionInfo }) => {
     const {query} = router    
 
     useEffect(() => {
-        setCollection(collectionInfo)                
-        setProducts([collectionInfo.products.edges]) 
+        setCollection(collectionInfo)                        
 
         if (query.category) { 
-            setProducts(productsByQuery)               
+            setProducts(collectionInfo.products.edges)               
+
             setProducts([
-                productsByQuery[0].filter(item => (item.node.materials.value.toLowerCase() === query.category && 
-                item.node.productType.toLowerCase() === query.id))
-            ])
-        }              
+                productsByQuery[0].filter(item => (                                                        
+                    item.node.productType.toLowerCase() === query.id) &&
+                    item.node.keywords.value.split(', ').includes(query.category)
+                )
+            ])            
+        } else setProducts([collectionInfo.products.edges]) 
+                
     }, [router]) 
 
     const handleSort = (e) => {
@@ -83,7 +86,7 @@ const Collection = ({ collectionInfo }) => {
             <section id="collection-products" className={styles.collection_main}>
                 <div className={styles.sort_filter_wrapper}>
                     <div className={styles.sorting_box}>                        
-                        <select name="sort_options" id="sort_options" onChange={handleSort}>                        
+                        <select name="sort_options" id="sort_options" onChange={handleSort}>
                             <option value="newest" selected>Newest</option>  
                             <option value="low-high">Price: low to high</option>
                             <option value="high-low">Price: high to low</option>
@@ -99,6 +102,7 @@ const Collection = ({ collectionInfo }) => {
                 <div className={styles.product_list}>
                     {products[0].map((product, idx) => {     
                         let intAndDec = Number(product.node.variants.edges[0].node.priceV2.amount).toFixed(2).split('.')
+                        let comparedIntAndDec = Number(product.node.compareAtPriceRange.maxVariantPrice.amount).toFixed(2)
                         return (
                             <ProductCard 
                                 key={idx}
@@ -106,10 +110,11 @@ const Collection = ({ collectionInfo }) => {
                                 imgUrl={product.node.variants.edges[0].node.image.url} 
                                 title={product.node.title} 
                                 productType={product.node.productType} 
-                                tags={product.node.tags} 
+                                keywords={product.node.keywords} 
                                 integer={intAndDec[0]} 
                                 decimals={intAndDec[1]} 
                                 currency={product.node.variants.edges[0].node.priceV2.currencyCode} 
+                                comparedPrice={comparedIntAndDec}
                             />
                         )                        
                     })}

@@ -8,8 +8,6 @@ const MainBanner = ({ promotions }) => {
     const [index, setIndex] = useState(0)
     const [bannerInfo, setBannerInfo] = useState(promotions)
 
-    console.log(bannerInfo)
-
     useEffect(() => {
         document.querySelector(`.${styles.banner_slider} .${styles.wrapper}`).style.width = `${bannerInfo.length * 100}vw`        
     }, [bannerInfo])
@@ -30,7 +28,8 @@ const MainBanner = ({ promotions }) => {
 
             <div className={styles.wrapper} style={{transform: `translateX(${-100*index}vw)`}}>            
                 {bannerInfo.map((item, idx) => {      
-                    const intAndDec = Number(item.node.variants.edges[0].node.priceV2.amount).toFixed(2).split('.')   
+                    const amountIntAndDec = Number(item.node.variants.edges[0].node.priceV2.amount).toFixed(2).split('.')   
+                    const comparedIntAndDec = Number(item.node.compareAtPriceRange.maxVariantPrice.amount).toFixed(2)
                     
                     return (          
                         <div key={idx} className={styles.imgContainer}>
@@ -42,14 +41,16 @@ const MainBanner = ({ promotions }) => {
                                         <h2 className={styles.product_title}>{item.node.title}</h2>
                                         <p className={styles.product_tags}>
                                             {item.node.tags.map((tag, idx) => (
-                                                tag !== 'promo' && <span key={idx} className={styles.product_tag}>{tag}<span className={styles.comma}>, </span></span>                                            
+                                                <span key={idx} className={styles.product_tag}>{tag}<span className={styles.comma}>, </span></span>                      
                                             ))}
                                         </p>                                                
                                         <div className={styles.product_price}>          
                                             <span className={styles.dollar}>$</span>
-                                            <span className={styles.integer}>{intAndDec[0]}</span>
-                                            <span className={styles.decimals}>.{intAndDec[1]}</span>
+                                            <span className={styles.integer}>{amountIntAndDec[0]}</span>
+                                            <span className={styles.decimals}>.{amountIntAndDec[1]}</span>
                                             <span className={styles.currency}>USD</span>
+                                            
+                                            <span className={styles.compared_price}>${comparedIntAndDec}</span>                       
                                         </div>
                                         
                                         <div className={styles.link_wrapper}>

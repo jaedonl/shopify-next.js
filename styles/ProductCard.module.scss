@@ -1,5 +1,7 @@
 .product_item {                
     cursor: pointer;       
+    border-bottom: 1px solid #000;
+    padding-bottom: 1rem;
     
     &:hover {                                           
         .product_title {
@@ -72,6 +74,13 @@
         .currency {
             font-size: 1rem;
             font-weight: 400;
+        }
+        .compared_price { 
+            margin-left: .2rem;
+            font-size: 1rem; 
+            font-weight: 400; 
+            color: #f5626e; 
+            text-decoration: line-through;
         }
     }
 }

@@ -5,7 +5,7 @@ import ProductCard from './ProductCard';
 
 const MainBestseller = ({bestseller}) => {
     const [best, setBest] = useState([bestseller.products.edges])        
-
+    
     return (
         <section className={styles.container}>
             <div className={styles.bestseller}>
@@ -22,7 +22,8 @@ const MainBestseller = ({bestseller}) => {
                 <div className={styles.product_list}>
                     {best[0].slice(0, 5).map((product, idx) => {     
                         let intAndDec = Number(product.node.variants.edges[0].node.priceV2.amount).toFixed(2).split('.')
-                        
+                        let comparedIntAndDec = Number(product.node.compareAtPriceRange.maxVariantPrice.amount).toFixed(2)    
+
                         return (
                             <ProductCard 
                                 key={idx}
@@ -30,9 +31,11 @@ const MainBestseller = ({bestseller}) => {
                                 imgUrl={product.node.variants.edges[0].node.image.url} 
                                 title={product.node.title} 
                                 productType={product.node.productType} 
-                                tags={product.node.tags} integer={intAndDec[0]} 
+                                keywords={product.node.keywords}
+                                integer={intAndDec[0]} 
                                 decimals={intAndDec[1]} 
                                 currency={product.node.variants.edges[0].node.priceV2.currencyCode} 
+                                comparedPrice={comparedIntAndDec}
                             />
                         )                        
                     })}
