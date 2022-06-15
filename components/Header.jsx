@@ -11,10 +11,43 @@ import SearchBox from './SearchBox';
 const Header = () => {   
     const [menus, setMenus] = useState([])
     const [childMenus, setChildMenus] = useState([])
-    const [isMenuOn, setIsMenuOn] = useState(false)
+    const [isMenuOn, setIsMenuOn] = useState(true)
     const [isSearchOn, setIsSearchOn] = useState(false)
     const cart = useSelector(state => state.cart)
     const router = useRouter()
+
+    const handleSearch = () => setIsSearchOn(!isSearchOn)
+
+    const showCategory = async (e) => {
+        setChildMenus([])
+        const res = await axios.get('/api/childmenus', {
+            params: { handle: e.currentTarget.getAttribute('name').toLowerCase() }}
+        )
+        var childList = res.data.body.data.collection            
+        var material = childList.material?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')
+        var size = childList.size?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')
+        var style = childList.style?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')        
+
+        var x = []
+        var materialObject = new Object();
+        materialObject.material = material
+        
+        var styleObject = new Object();
+        styleObject.style = style
+
+        var sizeObject = new Object();
+        sizeObject.size = size        
+
+        x.push(materialObject, styleObject, sizeObject)        
+
+        setChildMenus(x)
+
+        
+        // setChildMenus(arr => [...arr, material])  
+        // setChildMenus(arr => [...arr, size])  
+        // setChildMenus(arr => [...arr, style])  
+    }
+        
 
     useEffect(() => {
         const fetchMenu = async () => {
@@ -25,7 +58,7 @@ const Header = () => {
     }, [])
 
     useEffect(() => {        
-        setIsMenuOn(false)
+        setIsMenuOn(true)
         setIsSearchOn(false)
     }, [router])    
 
@@ -37,14 +70,17 @@ const Header = () => {
             document.querySelector('main').classList.remove('blur')        
             document.body.style.overflow = "auto";
         }        
-    }, [isSearchOn])
+    }, [isSearchOn])    
 
-    const handleSearch = () => setIsSearchOn(!isSearchOn)
+    
+    useEffect(() => {
+        
 
-    const showCategory = async (e) => {
-        const res = await axios.get('/api/childmenus', {params: { handle: e.currentTarget.getAttribute('name').toLowerCase() }})
-        console.log(res.data.body.data.collection)            
-    }
+        childMenus.forEach((child, idx) => {   
+            var x = child.material  
+            console.log(x);
+        });
+    }, [childMenus])    
 
     return (
         <header className={styles.header}>
@@ -55,46 +91,74 @@ const Header = () => {
 
                 <nav className={styles.collection_nav}>                    
                     <ul className={styles.collection_ul}>
-                        <li className={`${styles.menu_item} ${styles.parent_menu}`} onMouseEnter={() => setIsMenuOn(true)} onMouseLeave={() => setIsMenuOn(false)}>
+                        <li className={`${styles.menu_item} ${styles.parent_menu}`} onMouseEnter={() => setIsMenuOn(true)} onMouseLeave={() => setIsMenuOn(true)}>
                             <span>Shop</span>
                             { isMenuOn &&
+                            <div className={styles.navigation_grid}>
                                 <ul className={styles.nested_nav}>
                                     <li className={styles.child_menu}>
                                         <Link href="/collections/all">
                                             <a className={styles.child_link}>Shop All</a>
                                         </Link>
                                     </li>
-                                    {menus.map((menu, idx) => {                                        
-                                        if (menu.items.length > 0) {
-                                            return (
-                                                <li key={idx} className={styles.child_menu} name={menu.title} onMouseOver={showCategory}>
-                                                    <Link href={`/collections/${menu.title.toLowerCase()}`}>
-                                                        <a className={styles.child_link}>{menu.title}</a>
-                                                    </Link>          
+                                    {menus.map((menu, idx) => {                
+                                        return ( 
+                                            <li key={idx} className={styles.child_menu} name={menu.title} onMouseOver={showCategory}>
+                                                <Link href={`/collections/${menu.title.toLowerCase()}`}>
+                                                    <a className={styles.child_link}>{menu.title}</a>
+                                                </Link>                                                          
+                                            </li>         
+                                        )              
+                                        // if (menu.items.length > 0) {
+                                        //     return (
+                                        //         <li key={idx} className={styles.child_menu} name={menu.title} onMouseOver={showCategory}>
+                                        //             <Link href={`/collections/${menu.title.toLowerCase()}`}>
+                                        //                 <a className={styles.child_link}>{menu.title}</a>
+                                        //             </Link>          
 
 
-                                                    {/* <ul className={styles.grand_child}>
-                                                        {menu.items.map((item, idx) => (
-                                                            <li key={idx}>
-                                                                <Link href={`/collections/${menu.title.toLowerCase()}?category=${item.title.toLowerCase()}`}>
-                                                                    <a>– {item.title}</a>
-                                                                </Link>
-                                                            </li>
-                                                        ))}
-                                                    </ul> */}
-                                                </li>
-                                            )                                        
-                                        } else {
-                                            return (                                        
-                                                <li className={styles.child_menu}>
-                                                    <Link href={`/collections/${menu.title.toLowerCase()}`}>
-                                                        <a className={styles.menu_link}>{menu.title}</a>                                      
-                                                    </Link>
-                                                </li>
-                                            )
-                                        }                                                                           
+                                        //             <ul className={styles.grand_child}>
+                                        //                 {menu.items.map((item, idx) => (
+                                        //                     <li key={idx}>
+                                        //                         <Link href={`/collections/${menu.title.toLowerCase()}?category=${item.title.toLowerCase()}`}>
+                                        //                             <a>– {item.title}</a>
+                                        //                         </Link>
+                                        //                     </li>
+                                        //                 ))}
+                                        //             </ul>
+                                        //         </li>
+                                        //     )                                        
+                                        // } else {
+                                        //     return (                                        
+                                        //         <li className={styles.child_menu}>
+                                        //             <Link href={`/collections/${menu.title.toLowerCase()}`}>
+                                        //                 <a className={styles.menu_link}>{menu.title}</a>                                      
+                                        //             </Link>
+                                        //         </li>
+                                        //     )
+                                        // }                                                                           
                                     })}                                
-                                </ul>                                
+                                </ul>                  
+                                <ul className={styles.grand_child}>
+                                    { childMenus.length > 0 && childMenus.map((child, idx) => {          
+                                        // console.log(child);                           
+                                        if (Object.keys(child))   
+
+                                        return (
+                                            <li>
+                                                <h3>{Object.keys(child)}</h3>
+                                                
+                                                <ul>
+                                                    {/* {child && childMenus.child.map(item => (
+                                                        // <li>{childMenus.child}</li>
+                                                        123
+                                                    ))} */}
+                                                </ul>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>             
+                            </div> 
                             }
                         </li>
 
