@@ -19,6 +19,10 @@
             font-size: 18px;
         }
 
+        .hamburger_menu {
+            display: none;
+        }
+
         .home_link {
             flex: 1;
             font-weight: 500;
@@ -194,4 +198,55 @@
 .visbile {
     visibility: hidden;
     opacity: 0;
+}
+
+
+@media screen and (max-width: 480px) {
+    .header {  
+        .header_nav {
+            padding: 0 1rem;
+
+            .hamburger_menu {
+                display: block;
+                flex: 1;
+                svg {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+
+            .collection_nav {
+                position: fixed;
+                left: -100vw;        
+            }
+            
+            .right_nav {
+                .right_ul {            
+                    gap: .5rem;
+
+                    li {
+
+                        svg {                        
+                            width: 1.5rem;
+                            height: 1.5rem;
+                        }                   
+                        .cart_qty {
+                            position: absolute;
+                            bottom: 0rem;
+                            right: -0.5rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;    
+                            border-radius: 50%;
+                            background: #000;
+                            color: #fff;
+                            width: 20px;
+                            height: 20px;
+                            font-size: 14px;                      
+                        }
+                    }
+                }
+            }            
+        }        
+    }
 }

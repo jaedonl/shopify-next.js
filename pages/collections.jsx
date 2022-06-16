@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import styles from '../styles/Collections.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
+import Head from 'next/head'
 import { fetchAllCollection } from '../lib/shopify'
 
 const collections = ({collections}) => {
@@ -9,6 +10,12 @@ const collections = ({collections}) => {
     
     return (
         <main className={styles.template}>
+            <Head>
+                <title>JdonL | Our Collections</title>
+                <meta name="description" content="list of collections" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
             <h1 className={styles.page_title}>Our Collections</h1>
             <div className={styles.collection_grid}>
                 {collections.map((collection, idx) => {

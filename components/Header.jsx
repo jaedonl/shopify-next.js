@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Header.module.scss";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import {Search, PersonOutlineOutlined, ShoppingBagOutlined} from '@mui/icons-material';
+import {Search, PersonOutlineOutlined, ShoppingBagOutlined, Menu, Close} from '@mui/icons-material';
 import axios from 'axios';
 import { useRouter } from 'next/router'
 import SearchBox from './SearchBox';
@@ -44,6 +44,10 @@ const Header = () => {
         setChildMenus(x)
     }
 
+    const openMobileMenu = () => {
+        document.querySelector(`.${styles.collection_nav}`).style.left = "0";
+    }
+
     useEffect(() => {
         const fetchMenu = async () => {
             const res = await axios.get('/api/menus')            
@@ -70,6 +74,8 @@ const Header = () => {
     return (
         <header className={styles.header}>
             <nav className={styles.header_nav}>
+                <div className={styles.hamburger_menu} onClick={openMobileMenu}><Menu/></div>
+
                 <h1 className={styles.home_link}>
                     <Link href="/">JdonL</Link>
                 </h1>                
@@ -147,6 +153,8 @@ const Header = () => {
                         </li>
                     </ul>
                 </nav>
+
+                
             </nav>
 
             { isSearchOn && <SearchBox setIsSearchOn={handleSearch} isOn={isSearchOn} /> }
