@@ -11,10 +11,11 @@ import SearchBox from './SearchBox';
 const Header = () => {   
     const [menus, setMenus] = useState([])
     const [childMenus, setChildMenus] = useState([])
-    const [isMenuOn, setIsMenuOn] = useState(true)
+    const [isMenuOn, setIsMenuOn] = useState(false)
     const [isSearchOn, setIsSearchOn] = useState(false)
     const cart = useSelector(state => state.cart)
     const router = useRouter()
+    
 
     const handleSearch = () => setIsSearchOn(!isSearchOn)
 
@@ -27,7 +28,7 @@ const Header = () => {
         var material = childList.material?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')
         var size = childList.size?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')
         var style = childList.style?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')        
-
+        
         var x = []
         var materialObject = new Object();
         materialObject.material = material
@@ -41,13 +42,7 @@ const Header = () => {
         x.push(materialObject, styleObject, sizeObject)        
 
         setChildMenus(x)
-
-        
-        // setChildMenus(arr => [...arr, material])  
-        // setChildMenus(arr => [...arr, size])  
-        // setChildMenus(arr => [...arr, style])  
     }
-        
 
     useEffect(() => {
         const fetchMenu = async () => {
@@ -58,7 +53,7 @@ const Header = () => {
     }, [])
 
     useEffect(() => {        
-        setIsMenuOn(true)
+        setIsMenuOn(false)
         setIsSearchOn(false)
     }, [router])    
 
@@ -70,17 +65,7 @@ const Header = () => {
             document.querySelector('main').classList.remove('blur')        
             document.body.style.overflow = "auto";
         }        
-    }, [isSearchOn])    
-
-    
-    useEffect(() => {
-        
-
-        childMenus.forEach((child, idx) => {   
-            var x = child.material  
-            console.log(x);
-        });
-    }, [childMenus])    
+    }, [isSearchOn])      
 
     return (
         <header className={styles.header}>
@@ -91,7 +76,7 @@ const Header = () => {
 
                 <nav className={styles.collection_nav}>                    
                     <ul className={styles.collection_ul}>
-                        <li className={`${styles.menu_item} ${styles.parent_menu}`} onMouseEnter={() => setIsMenuOn(true)} onMouseLeave={() => setIsMenuOn(true)}>
+                        <li className={`${styles.menu_item} ${styles.parent_menu}`} onMouseEnter={() => setIsMenuOn(true)} onMouseLeave={() => setIsMenuOn(false)}>
                             <span>Shop</span>
                             { isMenuOn &&
                             <div className={styles.navigation_grid}>
@@ -102,69 +87,44 @@ const Header = () => {
                                         </Link>
                                     </li>
                                     {menus.map((menu, idx) => {                
-                                        return ( 
-                                            <li key={idx} className={styles.child_menu} name={menu.title} onMouseOver={showCategory}>
-                                                <Link href={`/collections/${menu.title.toLowerCase()}`}>
-                                                    <a className={styles.child_link}>{menu.title}</a>
-                                                </Link>                                                          
-                                            </li>         
-                                        )              
-                                        // if (menu.items.length > 0) {
-                                        //     return (
-                                        //         <li key={idx} className={styles.child_menu} name={menu.title} onMouseOver={showCategory}>
-                                        //             <Link href={`/collections/${menu.title.toLowerCase()}`}>
-                                        //                 <a className={styles.child_link}>{menu.title}</a>
-                                        //             </Link>          
+                                        if (menu.items.length > 0) {
+                                            return (
+                                                <li key={idx} className={styles.child_menu} name={menu.title}>
+                                                    <Link href={`/collections/${menu.title.toLowerCase()}`}>
+                                                        <a className={styles.child_link}>{menu.title}</a>
+                                                    </Link>          
 
 
-                                        //             <ul className={styles.grand_child}>
-                                        //                 {menu.items.map((item, idx) => (
-                                        //                     <li key={idx}>
-                                        //                         <Link href={`/collections/${menu.title.toLowerCase()}?category=${item.title.toLowerCase()}`}>
-                                        //                             <a>– {item.title}</a>
-                                        //                         </Link>
-                                        //                     </li>
-                                        //                 ))}
-                                        //             </ul>
-                                        //         </li>
-                                        //     )                                        
-                                        // } else {
-                                        //     return (                                        
-                                        //         <li className={styles.child_menu}>
-                                        //             <Link href={`/collections/${menu.title.toLowerCase()}`}>
-                                        //                 <a className={styles.menu_link}>{menu.title}</a>                                      
-                                        //             </Link>
-                                        //         </li>
-                                        //     )
-                                        // }                                                                           
+                                                    <ul className={styles.grand_child}>
+                                                        {menu.items.map((item, idx) => {
+                                                            return (
+                                                                <li key={idx}>
+                                                                    <Link href={`/collections/${menu.title.toLowerCase()}?category=${item.title.toLowerCase()}`}>
+                                                                        <a>{item.title}</a>
+                                                                    </Link>
+                                                                </li>
+                                                            )
+                                                        })}
+                                                    </ul>
+                                                </li>
+                                            )                                        
+                                        } else {
+                                            return (                                        
+                                                <li className={styles.child_menu}>
+                                                    <Link href={`/collections/${menu.title.toLowerCase()}`}>
+                                                        <a className={styles.menu_link}>{menu.title}</a>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        }
                                     })}                                
-                                </ul>                  
-                                <ul className={styles.grand_child}>
-                                    { childMenus.length > 0 && childMenus.map((child, idx) => {          
-                                        // console.log(child);                           
-                                        if (Object.keys(child))   
-
-                                        return (
-                                            <li>
-                                                <h3>{Object.keys(child)}</h3>
-                                                
-                                                <ul>
-                                                    {/* {child && childMenus.child.map(item => (
-                                                        // <li>{childMenus.child}</li>
-                                                        123
-                                                    ))} */}
-                                                </ul>
-                                            </li>
-                                        )
-                                    })}
-                                </ul>             
+                                </ul>                                      
                             </div> 
                             }
                         </li>
 
-                        <li className={styles.menu_item}><Link href="/collections/beds">Beds</Link></li>
-                        <li className={styles.menu_item}><Link href="/collections/lighting">Lights</Link></li>
-                        <li className={styles.menu_item}><Link href="/collections/tables">Tables</Link></li>
+                        <li className={styles.menu_item}><Link href="/collections">Collections</Link></li>
+                        <li className={styles.menu_item}><Link href="/collections/lighting">About</Link></li>                        
                     </ul>
                 </nav>
                 
@@ -174,7 +134,7 @@ const Header = () => {
                             <Search onClick={() => setIsSearchOn(!isSearchOn)} />                                                        
                         </li>
                         <li>
-                            <Link href="/login">
+                            <Link href="#">
                                 <PersonOutlineOutlined />                                
                             </Link>
                         </li>

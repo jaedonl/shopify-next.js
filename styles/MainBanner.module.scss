@@ -33,6 +33,28 @@
         }
     }
 
+    .slider_index {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 1;
+        display: flex;
+        gap: .3rem;
+
+        .indicator {                     
+            input {
+                width: 1rem;
+                height: 1rem;
+                border: 1px solid #444;
+                border-radius: 50%;                
+                cursor: pointer;   
+            }     
+            .current {
+                background-color: #444;
+            }       
+        }
+    }
+
     .wrapper {
         height: 100%;
         display: flex;

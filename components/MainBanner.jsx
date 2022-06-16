@@ -8,6 +8,8 @@ const MainBanner = ({ promotions }) => {
     const [index, setIndex] = useState(0)
     const [bannerInfo, setBannerInfo] = useState(promotions)
 
+    console.log(promotions);
+
     useEffect(() => {
         document.querySelector(`.${styles.banner_slider} .${styles.wrapper}`).style.width = `${bannerInfo.length * 100}vw`        
     }, [bannerInfo])
@@ -16,6 +18,11 @@ const MainBanner = ({ promotions }) => {
         if (direction === 'left') setIndex(index !== 0 ? index-1 : bannerInfo.length - 1)        
         if (direction === 'right') setIndex(index !== bannerInfo.length - 1 ? index + 1 : 0)        
     }    
+    
+    const changeIndex = (e) => {
+        const newIndex = Number(e.currentTarget.getAttribute('data_index'))
+        setIndex(newIndex)        
+    }
 
     return (
         <section className={styles.banner_slider}>
@@ -25,6 +32,15 @@ const MainBanner = ({ promotions }) => {
             <div className={styles.arrowContainer} style={{ right: "0", fontSize: 50 }} onClick={()=>handleArrow("right")}>
                 <ArrowForwardIos />
             </div>    
+            <ul className={styles.slider_index}>
+                {promotions.map((item, idx) => {                    
+                    return (
+                        <li className={styles.indicator} data_index={idx} onClick={changeIndex} aria-label="banner slider index indicator">
+                            { idx === index ? <input type="button" className={styles.current} /> : <input type="button" />}                            
+                        </li>
+                    )
+                })}
+            </ul>
 
             <div className={styles.wrapper} style={{transform: `translateX(${-100*index}vw)`}}>            
                 {bannerInfo.map((item, idx) => {      

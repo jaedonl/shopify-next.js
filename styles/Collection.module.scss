@@ -70,7 +70,7 @@
 
         .sort_filter_wrapper {
             display: flex;
-            justify-content: flex-end;
+            justify-content: flex-start;
             gap: 1.5rem;            
 
             .sorting_box {            
@@ -94,6 +94,64 @@
                     border: 1px solid;
                     height: 100%;                                                         
                 }                            
+            }
+
+            .filter_list {
+                position: fixed;
+                left: 0;
+                top: 0;
+                background: #fff;
+                width: 35vh;
+                height: 100vh;
+                z-index: 99;
+                padding: 1rem;
+                border: 1px solid #aaa;
+
+                .filter_wrapper {
+                    position: relative;
+
+                    .filter_title {
+                        font-size: 2rem;
+                        margin: 0;
+                    }
+
+                    .filter_close {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        background: none;
+                        border: none;
+
+                        svg {                        
+                            cursor: pointer;
+                            width: 2rem;
+                            height: 2rem;
+                            transition: all .1s ease;
+                            &:hover {
+                                transform: scale(110%);
+                            }
+                        }    
+                    }
+
+                    .filter_key {
+                        font-size: 1.3rem;
+                        margin: 2rem 0 .5rem;
+                    }
+
+                    ul {                        
+                        margin-bottom: 2rem;
+                        margin-left: 1rem;
+                        li {
+                            margin: .5rem 0;
+                            color: #444;
+                            
+                            &:hover {
+                                color: #000;
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
             }
         }
         

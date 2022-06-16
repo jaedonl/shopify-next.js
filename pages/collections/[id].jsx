@@ -3,33 +3,47 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { fetchCollectionInfo } from '../../lib/shopify'
+import { fetchCollectionInfo, fetchCollectionMetafields } from '../../lib/shopify'
 import styles from '../../styles/Collection.module.scss'
 import ProductCard from '../../components/ProductCard'
 import FilterListIcon from '@mui/icons-material/FilterList';
+import CloseIcon from '@mui/icons-material/Close';
 
-const Collection = ({ collectionInfo }) => {
+const Collection = ({ collectionInfo, categories, handle }) => {
     const [collection, setCollection] = useState(collectionInfo)    
     const [products, setProducts] = useState([collectionInfo.products.edges])
-    const [productsByQuery, setProductsByQuery] = useState([collectionInfo.products.edges])
+    const [isFilterOn, setIsFilterOn] = useState(false)
     const router = useRouter()          
-    const {query} = router    
+    const {query} = router        
+       
+    // var material = categories.material?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')
+    // var size = categories.size?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')
+    // var style = categories.style?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')            
 
     useEffect(() => {
-        setCollection(collectionInfo)                        
-
-        if (query.category) { 
-            setProducts(collectionInfo.products.edges)               
-
-            setProducts([
-                productsByQuery[0].filter(item => (                                                        
-                    item.node.productType.toLowerCase() === query.id) &&
-                    item.node.keywords.value.split(', ').includes(query.category)
-                )
-            ])            
-        } else setProducts([collectionInfo.products.edges]) 
-                
+        setIsFilterOn(false)
+        setCollection(collectionInfo)                
+        setProducts([collectionInfo.products.edges]) 
+        console.log(products);
+        if (query.category) {       
+            if (handle !== 'all') {
+                setProducts([
+                    [collectionInfo.products.edges][0].filter(item => (                                                        
+                        item.node.productType.toLowerCase() === query.id) &&
+                        item.node.keywords.value.split(', ').includes(query.category)
+                    )
+                ])   
+            } else {
+                setProducts([
+                    [collectionInfo.products.edges][0].filter(item =>                                                                           
+                        item.node.keywords.value.split(', ').includes(query.category)
+                    )
+                ])   
+            }
+                     
+        }       
     }, [router]) 
+    
 
     const handleSort = (e) => {
         if (e.target.value === "low-high") {                      
@@ -87,7 +101,7 @@ const Collection = ({ collectionInfo }) => {
                 <div className={styles.sort_filter_wrapper}>
                     <div className={styles.sorting_box}>                        
                         <select name="sort_options" id="sort_options" onChange={handleSort}>
-                            <option value="newest" selected>Newest</option>  
+                            <option value="newest">Newest</option>  
                             <option value="low-high">Price: low to high</option>
                             <option value="high-low">Price: high to low</option>
                             <option value="name">Name</option>                                                      
@@ -95,14 +109,53 @@ const Collection = ({ collectionInfo }) => {
                     </div>       
 
                     <div className={styles.filter_box}>
-                        <button><FilterListIcon/><span>Filter</span></button>                        
-                    </div>             
+                        <button onClick={() => setIsFilterOn(true)}><FilterListIcon/><span>Filter</span></button>                        
+                    </div>           
+
+                    { isFilterOn &&
+                        <div className={styles.filter_list}>                        
+                            <div className={styles.filter_wrapper}>
+                                <h3 className={styles.filter_title}>Filter:</h3>
+                                <button onClick={() => setIsFilterOn(false)} className={styles.filter_close}><CloseIcon/></button>
+                                { categories.material && <>
+                                    <h3 className={styles.filter_key}>Material</h3>
+                                    <ul>
+                                        {categories.material?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',').map((item, idx) => {
+                                            return (
+                                                <li><Link href={`/collections/${handle}?category=${item}`}><a>{item}</a></Link></li>
+                                            )
+                                        })}                                    
+                                    </ul></>                                    
+                                }
+                                { categories.style && <>
+                                    <h3 className={styles.filter_key}>Style</h3>
+                                    <ul>                                    
+                                        {categories.style?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',').map((item, idx) => {
+                                            return (
+                                                <li><Link href={`/collections/${handle}?category=${item}`}><a>{item}</a></Link></li>
+                                            )
+                                        })}                                    
+                                    </ul></>
+                                }
+                                { categories.size && <>
+                                    <h3 className={styles.filter_key}>Size</h3>
+                                    <ul>                                    
+                                        {categories.size?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',').map((item, idx) => {
+                                            return (
+                                                <li><Link href={`/collections/${handle}?category=${item}`}><a>{item}</a></Link></li>
+                                            )
+                                        })}                                    
+                                    </ul></>
+                                }
+                            </div>                        
+                        </div>
+                    }  
                 </div>
                 
                 <div className={styles.product_list}>
-                    {products[0].map((product, idx) => {     
+                    {products[0].map((product, idx) => {                             
                         let intAndDec = Number(product.node.variants.edges[0].node.priceV2.amount).toFixed(2).split('.')
-                        let comparedIntAndDec = Number(product.node.compareAtPriceRange.maxVariantPrice.amount).toFixed(2)
+                        let comparedIntAndDec = Number(product.node.compareAtPriceRange.maxVariantPrice.amount).toFixed(2)                        
                         return (
                             <ProductCard 
                                 key={idx}
@@ -126,14 +179,19 @@ const Collection = ({ collectionInfo }) => {
 
 export const getServerSideProps = async ({params}) => {            
     const handle = params.id        
-    const res = await fetchCollectionInfo(handle)        
+    const resCollection = await fetchCollectionInfo(handle)       
+    const resMetafields = await fetchCollectionMetafields(handle)     
 
-    const collectionInfo = res.body.data.collection    
+    const collectionInfo = resCollection.body.data.collection    
     collectionInfo.id = collectionInfo.id.split('/').pop()        
+
+    const metafields = resMetafields.body.data.collection    
     
     return {
         props: {
-            collectionInfo: collectionInfo,            
+            collectionInfo: collectionInfo,      
+            categories: metafields,
+            handle: handle,  
         },
     }
 }

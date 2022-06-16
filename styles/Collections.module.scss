@@ -1,0 +1,57 @@
+.template {
+    padding: 2rem;
+    max-width: 120rem;
+    margin: 0 auto;
+
+    .page_title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin: 0;
+    }      
+    .collection_grid {
+        .grid_line {
+            display: grid;
+            grid-template-columns: 1fr 1fr;            
+            padding: 1rem 0;
+            border-bottom: 1px solid #aaa;
+            transition: all .2s ease-in;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background-color: #444;
+                .collection_info {    
+                    h2, p {
+                        color: #fff;
+                    }
+                }
+            }
+
+            .collection_info {
+                display: flex;
+                flex-flow: column;                
+                justify-content: center;
+                padding: 1rem;
+
+                h2 {
+                    font-size: 2rem;
+                }
+            }
+    
+            .image_wrapper {         
+                padding: 0 1rem;   
+                span {
+                    position: relative !important;                        
+                    .image {
+                        position: relative !important;
+                        width: 100% !important;
+                        height: 100% !important;         
+                        min-height: 300px;                                       
+                    }
+                }
+            }
+        }
+    }
+}
