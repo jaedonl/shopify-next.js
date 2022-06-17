@@ -132,7 +132,7 @@ const Header = () => {
                         </li>
 
                         <li className={styles.menu_item}><Link href="/collections">Collections</Link></li>
-                        <li className={styles.menu_item}><Link href="/collections/lighting">About</Link></li>                        
+                        <li className={styles.menu_item}><Link href="#">About</Link></li>                        
                     </ul>
                 </nav>
                 
