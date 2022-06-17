@@ -34,7 +34,7 @@ const collections = ({collections}) => {
                                             <p>{collection.description}</p>
                                         </div>
                                     </div>
-                                    </a>
+                                    </a> 
                                 </Link>
                             )
                         } else {

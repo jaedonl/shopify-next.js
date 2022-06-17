@@ -312,6 +312,54 @@
     }
 }
 
+@media screen and (max-width: 992px) {
+    .template {
+        padding: 1rem;       
+
+        .product_main {
+            gap: 1rem;
+            .product_images_container {
+                flex: 1;
+            }
+            .product_info_container {
+                .input_quantity_wrapper {
+                    margin-top: 1rem;
+                    .input_label {
+                        display: block;
+                    }
+    
+                    .input_container {                    
+                        .input_quantity_box {    
+                            .quantity_button {
+                                cursor: none;
+                                width: 2rem;
+                                height: 2rem;
+                                transition: none;
+    
+                                &:hover {
+                                    background: none;
+                                    color: #000;
+                                }    
+                                svg {
+                                    width: .8rem;
+                                    height: .8rem;
+                                }
+                            }
+    
+                            .quantity_input {
+                                font-size: .8rem;                        
+                                width: 2rem;
+    
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 576px) {
     .template {
         padding: .5rem;        

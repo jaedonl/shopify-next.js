@@ -2,7 +2,7 @@
     cursor: pointer;       
     border-bottom: 1px solid #000;
     padding-bottom: 1rem;
-    flex: 1;
+    flex: 1;    
     
     &:hover {                                           
         .product_title {
@@ -85,6 +85,12 @@
             text-decoration: line-through;
         }
     }
+}
+
+@media screen and (max-width: 992px) {
+    .product_item {                
+        min-width: fit-content;
+    } 
 }
 
 @media screen and (max-width: 576px) {

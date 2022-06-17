@@ -180,9 +180,33 @@
     }
 }
 
+@media screen and (max-width: 992px) {
+    .banner_slider {
+        height: 50vh;
+        .wrapper {
+            .imgContainer {
+                flex-flow: column;
+                span {
+                    flex: 1;
+                }
+
+                .right_grid {
+                    flex: 1;
+                    flex-flow: row;   
+
+                    .banner_grid {
+                        height: 100%;
+                        width: 50%;
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 576px) {
     .banner_slider {
-        height: calc(60vh);
+        height: 60vh;
         
         .arrowContainer {
             cursor: none;

@@ -1,7 +1,9 @@
 .container {
     padding: 0 2rem;
     margin-top: 10rem;
-
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
     .bestseller {        
         .header {
             position: relative;        
@@ -39,8 +41,15 @@
             justify-content: space-between;
             column-gap: 2rem;
             row-gap: 4rem;       
+            overflow-x: scroll;
         }
     }    
+}
+
+@media screen and (max-width: 992px) {
+    .container {
+        padding: 0 1rem;
+    }
 }
 
 @media screen and (max-width: 576px) {

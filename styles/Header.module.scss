@@ -205,6 +205,13 @@
     opacity: 0;
 }
 
+@media screen and (max-width: 992px) {
+    .header {          
+        .header_nav {
+            padding: 0 1rem;
+        }
+    }
+}
 
 @media screen and (max-width: 576px) {
     .header {          
