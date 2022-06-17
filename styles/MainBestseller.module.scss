@@ -42,3 +42,37 @@
         }
     }    
 }
+
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 0 .5rem;
+        margin-top: 5rem;
+    
+        .bestseller {        
+            .header {    
+                h2 {
+                    text-align: left;            
+                    font-size: 1.5rem;
+                }
+                
+                a {
+                    font-size: 1rem;
+                    cursor: none;
+                    border-bottom: none;           
+        
+                    &:hover {
+                        border-bottom: none;
+                    }
+                    span {
+                        margin-right: .1rem;
+                    }
+                }
+            }            
+    
+            .product_list {
+                column-gap: 1rem;
+                overflow-x: scroll;
+            }
+        }    
+    }
+}

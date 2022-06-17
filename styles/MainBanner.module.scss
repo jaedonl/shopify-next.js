@@ -179,3 +179,78 @@
         }
     }
 }
+
+@media screen and (max-width: 480px) {
+    .banner_slider {
+        height: calc(60vh);
+        
+        .arrowContainer {
+            cursor: none;
+            width: 1.5rem;
+            height: 1.5rem;
+    
+            svg {
+                cursor: none;
+                height: 1.5rem;
+                opacity: .6;
+            }
+        }
+
+        .wrapper {
+            .imgContainer {
+                flex-flow: column;
+                span {
+                    flex: 1;
+                }
+
+                .right_grid {
+                    flex: 1;
+                    flex-flow: row;       
+                    
+                    .banner_grid {
+                        height: 100%;
+                        width: 50%;
+
+                        .banner_grid_wrapper {
+                            width: 100%;
+                            padding: 1rem;
+
+                            .product_title {
+                                font-size: 1.5rem;
+                            }
+                            .product_tag {
+                                font-size: .8rem;
+                            }
+
+                            .product_price {   
+                                .dollar { font-size: .8rem; font-weight: 600; }
+                                .integer { font-size: 1rem; font-weight: 600; }
+                                .decimals { font-size: .8rem; font-weight: 600; }
+                                .currency { font-size: .8rem; font-weight: 400; }
+        
+                                .compared_price { 
+                                    margin-left: .2rem;
+                                    font-size: .8rem; 
+                                    font-weight: 400; 
+                                    color: #f5626e; 
+                                    text-decoration: line-through;
+                                }
+                            }
+
+                            .link_wrapper {
+                                .see_detail {                                                                            
+                                    padding: .5rem;
+                                    font-size: 1rem;
+                                    font-weight: 400;
+                                    cursor: none;
+                                    transition: all .2s ease;
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+}

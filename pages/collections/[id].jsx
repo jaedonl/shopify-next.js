@@ -24,7 +24,7 @@ const Collection = ({ collectionInfo, categories, handle }) => {
         setIsFilterOn(false)
         setCollection(collectionInfo)                
         setProducts([collectionInfo.products.edges]) 
-        console.log(products);
+        
         if (query.category) {       
             if (handle !== 'all') {
                 setProducts([
@@ -43,7 +43,14 @@ const Collection = ({ collectionInfo, categories, handle }) => {
                      
         }       
     }, [router]) 
-    
+
+    useEffect(() => {
+        {isFilterOn === true
+            ? document.querySelector(`.${styles.filter_list}`).style.left = "0"
+            : document.querySelector(`.${styles.filter_list}`).style.left = "-100%"
+        }
+    }, [isFilterOn])
+
 
     const handleSort = (e) => {
         if (e.target.value === "low-high") {                      
@@ -112,11 +119,11 @@ const Collection = ({ collectionInfo, categories, handle }) => {
                         <button onClick={() => setIsFilterOn(true)}><FilterListIcon/><span>Filter</span></button>                        
                     </div>           
 
-                    { isFilterOn &&
+                    {/* { isFilterOn && */}
                         <div className={styles.filter_list}>                        
                             <div className={styles.filter_wrapper}>
                                 <h3 className={styles.filter_title}>Filter:</h3>
-                                <button onClick={() => setIsFilterOn(false)} className={styles.filter_close}><CloseIcon/></button>
+                                <button type='button' aria-label='close button' onClick={() => setIsFilterOn(false)} className={styles.filter_close}><CloseIcon/></button>
                                 { categories.material && <>
                                     <h3 className={styles.filter_key}>Material</h3>
                                     <ul>
@@ -149,7 +156,7 @@ const Collection = ({ collectionInfo, categories, handle }) => {
                                 }
                             </div>                        
                         </div>
-                    }  
+                    {/* }   */}
                 </div>
                 
                 <div className={styles.product_list}>

@@ -1,12 +1,12 @@
 .template {
     padding: 2rem;
-    max-width: 120rem;
-    margin: 0 auto;
+    // max-width: 120rem;
+    // margin: 0 auto;
 
     .page_title {
         font-size: 2.5rem;
         font-weight: 600;
-        margin: 0;
+        margin: 0 0 2rem;
     }      
     .collection_grid {
         .grid_line {
@@ -49,6 +49,63 @@
                         width: 100% !important;
                         height: 100% !important;         
                         min-height: 300px;                                       
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .template {
+        padding: .5rem;
+    
+        .page_title {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }      
+
+        .collection_grid {
+            .grid_line {
+                display: block;
+                padding: 1rem 0;
+                transition: none;
+    
+                &:last-child {
+                    border-bottom: 1px solid #aaa;
+                }
+    
+                &:hover {
+                    background-color: none;
+                    .collection_info {    
+                        h2, p {
+                            color: #000;
+                        }
+                    }
+                }
+    
+                .collection_info {
+                    padding: 0;
+    
+                    h2 {
+                        font-size: 2rem;
+                        margin-bottom: 1rem;
+                    }
+                    p {
+                        margin-top: 0;
+                    }
+                }
+        
+                .image_wrapper {         
+                    padding: 0;   
+                    span {
+                        position: relative !important;                        
+                        .image {
+                            position: relative !important;
+                            width: 100% !important;
+                            height: 100% !important;         
+                            min-height: 300px;                                       
+                        }
                     }
                 }
             }

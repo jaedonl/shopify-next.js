@@ -2,6 +2,7 @@
     cursor: pointer;       
     border-bottom: 1px solid #000;
     padding-bottom: 1rem;
+    flex: 1;
     
     &:hover {                                           
         .product_title {
@@ -43,6 +44,7 @@
         font-size: .9rem;
         span {
             text-transform: capitalize;
+            color: #333;
 
             &.tags {
                 &:last-child {
@@ -83,4 +85,57 @@
             text-decoration: line-through;
         }
     }
+}
+
+@media screen and (max-width: 480px) {
+    .product_item {                
+        cursor: none;       
+        
+        &:hover {                                           
+            .product_title {
+                border-bottom: none;
+            }
+             
+            .image {                            
+                transition: none;                        
+                transform: none;
+            }
+        }
+    
+        .image_wrapper {
+            background: none;
+        }
+        
+    
+        .product_title {
+            font-size: 1.2rem;
+            border-bottom: none;
+            transition: none;
+        }
+    
+        .product_type_tags {
+            font-size: .8rem;
+        }
+
+
+        .product_price {                                
+            .dollar {
+                font-size: .8rem;
+            }
+            .integer {
+                font-size: 1rem;
+            }
+            .decimals {
+                font-size: .8rem;
+            }
+            .currency {
+                font-size: .8rem;
+            }
+            .compared_price { 
+                margin-left: .1rem;
+                font-size: .8rem; 
+            }
+        }
+    }
+
 }

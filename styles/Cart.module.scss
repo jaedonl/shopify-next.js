@@ -1,7 +1,7 @@
 .template {
     padding: 2rem;
-    max-width: 120rem;
-    margin: 0 auto;
+    // max-width: 120rem;
+    // margin: 0 auto;
     
     .page_title {
         font-size: 2.5rem;
@@ -241,6 +241,111 @@
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .template {
+        padding: .5rem;
+        
+        .page_title {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        .cart_container {
+            display: block;        
+            margin: 1rem 0;
+                        
+            .cart_items {            
+                .list_item {
+                    gap: 1rem;
+                    padding: 1.5rem 0;
+    
+                    .item_info {
+                        gap: .5rem;
+                    }
+                    .image_wrapper {                    
+                        width: 8rem;
+                    }
+    
+                    .product_info {
+                        color: #585858;
+                        h3 {
+                            font-size: 1rem;
+                        }
+                        .tag {
+                            font-size: .8rem;                    
+                        }
+                        .product_dimensions {
+                            font-size: .8rem;   
+                        }
+                        .product_price {
+                            margin-top: 1rem;
+                            color: #000;
+                            font-weight: 600;
+                        }
+                    }          
+                    
+                    .input_quantity_wrapper {
+                        margin-top: 1rem;
+                        display: flex;
+                        align-items: center;
+                        gap: .5rem;
+                        label {
+                            font-size: .8rem;
+                        }
+        
+                        .input_container {                    
+                            .input_quantity_box {       
+                                margin-top: 0; 
+
+                                .quantity_button {
+                                    cursor: none;
+                                    width: 1.5rem;
+                                    height: 1.5rem;
+                                    transition: none;
+        
+                                    &:hover {
+                                        background: none;
+                                        color: #000;
+                                    }
+        
+                                    svg {
+                                        width: .8rem;
+                                        height: .8rem;
+                                    }
+                                }
+        
+                                .quantity_input {
+                                    font-size: 1rem;                        
+                                    width: 1.5rem;
+                                }
+                            }
+                            
+                        }
+                    }
+    
+                    .item_subtotal {
+                        .item_total {
+                            font-size: 1.5rem;
+                            font-weight: 700;
+                        }
+    
+                        .remove_item {
+                            margin-top: 1rem;
+                            font-size: .8rem;
+                            color: #585858;
+                            cursor: none;
+    
+                            &:hover {
+                                color: #000;
+                            }
+                        }
+                    }
+                }            
             }
         }
     }

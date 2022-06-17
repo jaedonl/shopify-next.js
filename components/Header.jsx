@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Image from "next/image";
 import styles from "../styles/Header.module.scss";
 import Link from "next/link";
@@ -13,9 +13,23 @@ const Header = () => {
     const [childMenus, setChildMenus] = useState([])
     const [isMenuOn, setIsMenuOn] = useState(false)
     const [isSearchOn, setIsSearchOn] = useState(false)
+    const [isMobileMenu, setIsMobileMenu] = useState(false)
+    const [y, setY] = useState(window.pageYOffset || document.documentElement.scrollTop);
     const cart = useSelector(state => state.cart)
     const router = useRouter()
-    
+
+    const handleNavigation = useCallback(() => {
+        y > window.scrollY  ? document.querySelector(`.${styles.header}`).style.top = '0' //scrolling up
+                            : document.querySelector(`.${styles.header}`).style.top = '-4.5rem' //scrolling down        
+        setY(window.scrollY)
+    }, [y]);
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleNavigation);
+        return () => {
+          window.removeEventListener("scroll", handleNavigation);
+        };
+    }, [handleNavigation]);
 
     const handleSearch = () => setIsSearchOn(!isSearchOn)
 
@@ -40,13 +54,19 @@ const Header = () => {
         sizeObject.size = size        
 
         x.push(materialObject, styleObject, sizeObject)        
-
         setChildMenus(x)
     }
 
-    const openMobileMenu = () => {
-        document.querySelector(`.${styles.collection_nav}`).style.left = "0";
-    }
+    useEffect(() => {
+        if (isMobileMenu ) {
+            setIsMenuOn(true)
+            document.querySelector(`.${styles.collection_nav}`).style.left = "0"
+            setIsMobileMenu(true)
+        } else {
+            document.querySelector(`.${styles.collection_nav}`).style.left = "-100vw"
+            setIsMobileMenu(false)
+        }                
+    }, [isMobileMenu, isMenuOn])
 
     useEffect(() => {
         const fetchMenu = async () => {
@@ -56,10 +76,6 @@ const Header = () => {
         fetchMenu()
     }, [])
 
-    useEffect(() => {        
-        setIsMenuOn(false)
-        setIsSearchOn(false)
-    }, [router])    
 
     useEffect(() => {
         if (isSearchOn) {
@@ -69,21 +85,28 @@ const Header = () => {
             document.querySelector('main').classList.remove('blur')        
             document.body.style.overflow = "auto";
         }        
-    }, [isSearchOn])      
+    }, [isSearchOn])   
+    
+    useEffect(() => {        
+        setIsMenuOn(false)
+        setIsMobileMenu(false)
+        setIsSearchOn(false)
+    }, [router])    
 
     return (
         <header className={styles.header}>
             <nav className={styles.header_nav}>
-                <div className={styles.hamburger_menu} onClick={openMobileMenu}><Menu/></div>
+                <div className={styles.hamburger_menu} onClick={()=>setIsMobileMenu(true)}><Menu/></div>
 
                 <h1 className={styles.home_link}>
                     <Link href="/">JdonL</Link>
                 </h1>                
 
-                <nav className={styles.collection_nav}>                    
-                    <ul className={styles.collection_ul}>
-                        <li className={`${styles.menu_item} ${styles.parent_menu}`} onMouseEnter={() => setIsMenuOn(true)} onMouseLeave={() => setIsMenuOn(false)}>
-                            <span>Shop</span>
+                <nav className={styles.collection_nav}>  
+                    <button type='button' aria-label='close button' onClick={()=>setIsMobileMenu(false)} className={styles.mobile_menu_close}><Close/></button>                                 
+                    <ul className={styles.collection_ul}>                        
+                        <li className={`${styles.menu_item} ${styles.parent_menu}`} onMouseEnter={()=>setIsMenuOn(true)} onMouseLeave={() => setIsMenuOn(false)}>
+                            { !isMobileMenu ? <span>Shop</span> : <span>JdonL</span>}
                             { isMenuOn &&
                             <div className={styles.navigation_grid}>
                                 <ul className={styles.nested_nav}>
@@ -118,7 +141,7 @@ const Header = () => {
                                             return (                                        
                                                 <li className={styles.child_menu}>
                                                     <Link href={`/collections/${menu.title.toLowerCase()}`}>
-                                                        <a className={styles.menu_link}>{menu.title}</a>
+                                                        <a className={styles.child_link}>{menu.title}</a>
                                                     </Link>
                                                 </li>
                                             )

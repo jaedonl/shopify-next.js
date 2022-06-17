@@ -6,7 +6,12 @@ import Head from 'next/head'
 import { fetchAllCollection } from '../lib/shopify'
 
 const collections = ({collections}) => {
-    console.log(collections)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+    console.log(windowWidth);
+
+    useEffect(()=> {
+        console.log(windowWidth);
+    }, [windowWidth])
     
     return (
         <main className={styles.template}>
@@ -19,23 +24,41 @@ const collections = ({collections}) => {
             <h1 className={styles.page_title}>Our Collections</h1>
             <div className={styles.collection_grid}>
                 {collections.map((collection, idx) => {
-                    if (idx % 2 === 1) {
-                        return (
-                            <Link href={`/collections/${collection.handle}`}>
-                                <a>
-                                <div className={styles.grid_line}>
-                                    <div className={styles.image_wrapper}>
-                                        <Image src={collection.image.url} layout="fill" objectFit="cover" className={styles.image} />    
+                    if (windowWidth > 480) {
+                        if (idx % 2 === 1) {
+                            return (
+                                <Link href={`/collections/${collection.handle}`}>
+                                    <a>
+                                    <div className={styles.grid_line}>
+                                        <div className={styles.image_wrapper}>
+                                            <Image src={collection.image.url} layout="fill" objectFit="cover" className={styles.image} />    
+                                        </div>
+                                        
+                                        <div className={styles.collection_info}>
+                                            <h2>{collection.title}</h2>
+                                            <p>{collection.description}</p>
+                                        </div>
                                     </div>
-                                    
-                                    <div className={styles.collection_info}>
-                                        <h2>{collection.title}</h2>
-                                        <p>{collection.description}</p>
-                                    </div>
-                                </div>
-                                </a>
-                            </Link>
-                        )
+                                    </a>
+                                </Link>
+                            )
+                        } else {
+                            return (
+                                <Link href={`/collections/${collection.handle}`}>
+                                    <a>
+                                    <div className={styles.grid_line}>
+                                        <div className={styles.collection_info}>
+                                            <h2>{collection.title}</h2>
+                                            <p>{collection.description}</p>
+                                        </div>
+    
+                                        <div className={styles.image_wrapper}>
+                                            <Image src={collection.image.url} layout="fill" objectFit="cover" className={styles.image} />    
+                                        </div>
+                                    </div></a>
+                                </Link>
+                            )
+                        }
                     } else {
                         return (
                             <Link href={`/collections/${collection.handle}`}>
@@ -53,6 +76,7 @@ const collections = ({collections}) => {
                             </Link>
                         )
                     }
+                    
                     
                 })}
             </div>

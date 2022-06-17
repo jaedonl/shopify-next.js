@@ -40,3 +40,7 @@ li {
     filter: blur(1rem);
     opacity: .8;
 }
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
