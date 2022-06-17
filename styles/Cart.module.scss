@@ -331,21 +331,53 @@
                     .item_subtotal {
                         .item_total {
                             font-size: 1.5rem;
-                            font-weight: 700;
                         }
     
                         .remove_item {
                             margin-top: 1rem;
                             font-size: .8rem;
-                            color: #585858;
                             cursor: none;
-    
+
                             &:hover {
                                 color: #000;
                             }
                         }
                     }
                 }            
+            }
+
+            .cart_subtotal {
+                padding: 1rem 0;
+    
+                .order_summary {
+                    font-size: 1.5rem;   
+                }
+                .summary_line {  
+                    padding: .5rem 0;
+                    font-size: 1rem;
+               
+                }
+                .final_price {
+                    font-size: 1.5rem;
+                }
+    
+                .cart_checkout {
+                    margin-top: 1rem;
+    
+                    .button_wrapper {
+                        button {                   
+                            width: 10rem;
+                            margin-top: 0;
+                            cursor: none;
+                            font-size: 1.2rem;
+    
+                            &:hover {
+                                background: #444;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

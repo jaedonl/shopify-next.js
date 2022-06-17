@@ -106,7 +106,7 @@ const cart = () => {
 
                                     <button name="remove" type="button" aria-label="remove item" className={styles.remove_item}
                                     onClick={() => handleRemoveProduct(item)}
-                                    >Remove item</button>                                    
+                                    >Remove</button>                                    
                                 </div>                  
                             </li>                            
                         ))}                                          
