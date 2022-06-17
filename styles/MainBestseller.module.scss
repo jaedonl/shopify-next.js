@@ -43,10 +43,14 @@
     }    
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 576px) {
     .container {
         padding: 0 .5rem;
         margin-top: 5rem;
+        
+        ::-webkit-scrollbar {
+            -webkit-appearance: none;
+        }
     
         .bestseller {        
             .header {    

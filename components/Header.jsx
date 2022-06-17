@@ -2,19 +2,19 @@ import { useEffect, useState, useCallback } from 'react'
 import Image from "next/image";
 import styles from "../styles/Header.module.scss";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {Search, PersonOutlineOutlined, ShoppingBagOutlined, Menu, Close} from '@mui/icons-material';
 import axios from 'axios';
 import { useRouter } from 'next/router'
 import SearchBox from './SearchBox';
 
 const Header = () => {   
-    const [menus, setMenus] = useState([])
-    const [childMenus, setChildMenus] = useState([])
+    const [menus, setMenus] = useState([])    
     const [isMenuOn, setIsMenuOn] = useState(false)
     const [isSearchOn, setIsSearchOn] = useState(false)
     const [isMobileMenu, setIsMobileMenu] = useState(false)
     const [y, setY] = useState(window.pageYOffset || document.documentElement.scrollTop);
+    const [cartPop, setCartPop] = useState(false)
     const cart = useSelector(state => state.cart)
     const router = useRouter()
 
@@ -22,7 +22,9 @@ const Header = () => {
         y > window.scrollY  ? document.querySelector(`.${styles.header}`).style.top = '0' //scrolling up
                             : document.querySelector(`.${styles.header}`).style.top = '-4.5rem' //scrolling down        
         setY(window.scrollY)
-    }, [y]);
+    }, [y]);    
+
+    const handleSearch = () => setIsSearchOn(!isSearchOn)
 
     useEffect(() => {
         window.addEventListener("scroll", handleNavigation);
@@ -31,31 +33,6 @@ const Header = () => {
         };
     }, [handleNavigation]);
 
-    const handleSearch = () => setIsSearchOn(!isSearchOn)
-
-    const showCategory = async (e) => {
-        setChildMenus([])
-        const res = await axios.get('/api/childmenus', {
-            params: { handle: e.currentTarget.getAttribute('name').toLowerCase() }}
-        )
-        var childList = res.data.body.data.collection            
-        var material = childList.material?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')
-        var size = childList.size?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')
-        var style = childList.style?.value.replace(/[\[\]']+/g,'').replaceAll('"', '').split(',')        
-        
-        var x = []
-        var materialObject = new Object();
-        materialObject.material = material
-        
-        var styleObject = new Object();
-        styleObject.style = style
-
-        var sizeObject = new Object();
-        sizeObject.size = size        
-
-        x.push(materialObject, styleObject, sizeObject)        
-        setChildMenus(x)
-    }
 
     useEffect(() => {
         if (isMobileMenu ) {
@@ -67,6 +44,7 @@ const Header = () => {
             setIsMobileMenu(false)
         }                
     }, [isMobileMenu, isMenuOn])
+
 
     useEffect(() => {
         const fetchMenu = async () => {
@@ -91,6 +69,7 @@ const Header = () => {
         setIsMenuOn(false)
         setIsMobileMenu(false)
         setIsSearchOn(false)
+        setCartPop(false)
     }, [router])    
 
     return (
@@ -173,6 +152,7 @@ const Header = () => {
                             </Link>
                             
                             <span className={styles.cart_qty}>{cart.quantity}</span>
+                            
                         </li>
                     </ul>
                 </nav>

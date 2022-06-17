@@ -7,14 +7,14 @@ const Footer = () => {
     <footer className={styles.container}>
         <div className={styles.footer_wrapper}>
             <div className={styles.footer_box}>
-                <h3>Join JdonL Family</h3>
+                <h3>Join our family</h3>
                 <p>Bring your ideas to life with special discounts, inspiration, and lots of good things in store. It's all free.</p>
 
                 <Link href="/login">See more</Link>
             </div>
             
             <div className={styles.footer_box}>
-                <h3>Join JdonL Family</h3>
+                <h3>Help</h3>
                 <nav>
                     <ul>
                         <li><Link href="/customer-service">Customer service</Link></li>

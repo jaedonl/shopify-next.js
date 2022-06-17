@@ -12,8 +12,8 @@
         display: flex;
         align-items: center;
         background-color: #f5f5f5;        
-        max-width: 120rem;
-        margin: 0 auto;
+        // max-width: 120rem;
+        // margin: 0 auto;
         svg {
             width: 2rem;
             height: 2rem;
@@ -99,6 +99,38 @@
                     border-bottom: 3px solid transparent;
                 }
             }
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .search_box {
+        padding: 0 .5rem;
+    
+        .search_wrapper {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;  
+            
+            .search_input {
+                padding: .5rem .5rem;                
+                font-size: 1rem;
+            }        
+        }
+
+        .search_result {                         
+            padding: .5rem;
+
+            .search_title {
+                font-size: 1.5rem;
+            }
+    
+            .result_list {                
+                grid-template-columns: 1fr 1fr;
+                column-gap: 1rem;
+                row-gap: 2rem;                
+            }            
         }
     }
 }

@@ -5,7 +5,7 @@ const cartSlice = createSlice({
     initialState: {
         products: [],
         quantity: 0,
-        total: 0
+        total: 0,
     },
     reducers: {
         addProduct: (state, action) => {                                         
@@ -17,7 +17,7 @@ const cartSlice = createSlice({
             state.quantity = state.products.length      
             const itemTotal = action.payload.price * action.payload.qty
             state.total += itemTotal
-
+            
             // const checkout = await createCheckout(item.id, item.qty)
             // const newCheckout = await updateCheckout(checkout.id, cart)      
         },
@@ -31,17 +31,9 @@ const cartSlice = createSlice({
             state.total -= itemTotal            
         }, 
 
-        removeProduct: (state, action) => {                                     
-            const itemTotal = action.payload.price * action.payload.qty
-
-            const nextCartItems = state.products.filter(item => item.id !== action.payload.id)
-            state.products = nextCartItems
-            state.quantity = state.products.length
-            state.total -= itemTotal            
-        }, 
-
         updateQuantity: (state, action) => {
             const idx = action.payload.itemIndex
+
             if (action.payload.buttonType === 'minus' && action.payload.itemQty > 1) {   
                 state.products[idx].qty -= 1
                 state.total -= state.products[idx].price

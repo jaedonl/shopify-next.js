@@ -8,8 +8,6 @@ const MainBanner = ({ promotions }) => {
     const [index, setIndex] = useState(0)
     const [bannerInfo, setBannerInfo] = useState(promotions)
 
-    console.log(promotions);
-
     useEffect(() => {
         document.querySelector(`.${styles.banner_slider} .${styles.wrapper}`).style.width = `${bannerInfo.length * 100}vw`        
     }, [bannerInfo])

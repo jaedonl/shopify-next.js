@@ -6,12 +6,7 @@ import Head from 'next/head'
 import { fetchAllCollection } from '../lib/shopify'
 
 const collections = ({collections}) => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-    console.log(windowWidth);
-
-    useEffect(()=> {
-        console.log(windowWidth);
-    }, [windowWidth])
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)    
     
     return (
         <main className={styles.template}>
@@ -24,7 +19,7 @@ const collections = ({collections}) => {
             <h1 className={styles.page_title}>Our Collections</h1>
             <div className={styles.collection_grid}>
                 {collections.map((collection, idx) => {
-                    if (windowWidth > 480) {
+                    if (windowWidth > 576) {
                         if (idx % 2 === 1) {
                             return (
                                 <Link href={`/collections/${collection.handle}`}>
